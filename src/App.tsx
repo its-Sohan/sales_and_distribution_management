@@ -94,6 +94,10 @@ const downloadCustomerHistoryPdf: typeof import('./customerHistoryPdf').download
   const module = await import('./customerHistoryPdf')
   return module.downloadCustomerHistoryPdf(data)
 }
+const downloadStockReportPdf: typeof import('./stockReportPdf').downloadStockReportPdf = async data => {
+  const module = await import('./stockReportPdf')
+  return module.downloadStockReportPdf(data)
+}
 
 type View = 'sales' | 'inventory' | 'accounts' | 'suppliers' | 'expenses' | 'reports'
 type Dialog = 'payment' | 'customer' | 'discount' | 'shortcuts' | 'settings' | 'profile' | 'clear' | 'receipt' | 'edit' | 'newItem' | 'addStock' | 'findBill' | 'newCustomer' | 'customerProfile' | 'addTx' | 'itemStats' | 'newExpense' | 'purchases' | 'adjustStock' | 'voidPurchase' | 'returnItems' | 'returnSlip' | 'valuation' | null
@@ -189,6 +193,7 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
   const [toastHovered, setToastHovered] = useState(false)
   const [toastFocused, setToastFocused] = useState(false)
   const [toast, setToast] = useState<{ text: string; variant?: 'success' | 'danger'; undo?: () => void } | null>(null)
+  const [downloadingStockReport, setDownloadingStockReport] = useState(false)
   const warnBelowCost = () => setToast({ text: t('belowCostToast'), variant: 'danger' })
   const searchRef = useRef<HTMLInputElement>(null)
   const qtyRef = useRef<HTMLInputElement>(null)
@@ -373,6 +378,25 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
   const openAddStock = (product?: Product) => {
     setStockPurchaseDraft(product ? { productId: product.id } : null)
     openDialog('addStock')
+  }
+
+  const downloadStockSummary = async () => {
+    if (downloadingStockReport) return
+    setDownloadingStockReport(true)
+    try {
+      const { buildStockReportSummary } = await import('./stockReport')
+      const targetProducts = inventorySearchQuery.trim() ? filteredInventory : catalog
+      const report = buildStockReportSummary(targetProducts, state, lang, now, {
+        query: inventorySearchQuery.trim() || undefined,
+        totalCatalog: catalog,
+      })
+      await downloadStockReportPdf(report)
+      setToast({ text: t('stockReportPdfDownloaded'), variant: 'success' })
+    } catch {
+      setToast({ text: t('stockReportError'), variant: 'danger' })
+    } finally {
+      setDownloadingStockReport(false)
+    }
   }
 
   const recordStockReceiving = async (receiving: StockReceiving) => {
@@ -1226,6 +1250,17 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
           </section>
         </div> : view === 'suppliers' ? <Suppliers state={state} catalog={catalog} lang={lang} now={now} window={reportWindow} onWindow={setReportWindow} purchaseRequest={supplierPurchaseRequest} onPurchaseRequestHandled={() => setSupplierPurchaseRequest(false)} onUpdate={async change => !!await updateState(change)} onVoid={openVoidDialog}/> : view === 'reports' ? <Reports receipts={state.receipts} catalog={catalog} lang={lang} now={now} window={reportWindow} purchases={state.purchases ?? []} supplierPayments={state.supplierPayments ?? []} purchaseSettlements={state.purchaseSettlements ?? []} stockReceivings={state.stockReceivings ?? []} expenses={state.expenses ?? []} returns={state.returns ?? []} transactions={state.transactions ?? []} onWindow={setReportWindow} onReceipt={r => { setActiveReceipt(r); setJustCompleted(false); openDialog('receipt') }} onItem={p => { setActiveReportProduct(p); openDialog('itemStats') }} onCounter={() => setView('sales')}/> : <section className={`secondary-view${view === 'expenses' ? ' expenses-view' : ''}${view === 'inventory' ? ' inventory-view' : ''}${view === 'accounts' ? ' accounts-view' : ''}`} key={view}>
           {view === 'inventory' && <div className="section-toolbar">
+            <button
+              type="button"
+              className="secondary-button stock-report-trigger"
+              onClick={() => void downloadStockSummary()}
+              disabled={downloadingStockReport}
+              aria-label={t('downloadStockReport')}
+              title={t('downloadStockReport')}
+            >
+              <Icon name="download" size={15}/>
+              <span>{t(downloadingStockReport ? 'downloadingStockReport' : 'stockReport')}</span>
+            </button>
             <button className="secondary-button purchase-history-trigger" onClick={() => openDialog('purchases')}><Icon name="clock" size={15}/><span>{t('stockHistory')}</span></button>
             <button className="secondary-button new-item-trigger" onClick={openProvisionDialog}><Icon name="plus" size={15}/><span>{t('provisionItem')}</span></button>
             <button className="provision-trigger" onClick={() => openAddStock()}><Icon name="inventory" size={15}/><span>{t('addStock')}</span></button>

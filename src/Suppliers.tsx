@@ -105,14 +105,30 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
         </div>
       </summary>
       <div className="supplier-bill-content">
-      {p.mode === 'invoice' ? <div className="data-table-wrap"><table className="data-table"><thead><tr><th>{t('invoiceDescription')}</th><th>{t('quantity')}</th><th>{t('receivedQty')}</th><th>{t('remaining')}</th><th>{t('cost')}</th></tr></thead><tbody>{receiving.lines.map(l => <tr key={l.id}><td>{l.description}</td><td>{quantityWithUnit(l.quantity,l.unit)}</td><td>{quantityWithUnit(l.receivedQuantity,l.unit)}</td><td>{quantityWithUnit(l.remainingQuantity,l.unit)}</td><td>৳ {money(l.total)}</td></tr>)}</tbody></table></div>
-        : <div className="data-table-wrap"><table className="data-table"><thead><tr><th>{t('item')}</th><th>{t('quantity')}</th><th>{t('unitCost')}</th><th>{t('cost')}</th></tr></thead><tbody>{p.lines.map((line,index) => <tr key={index}><td>{catalog.find(c=>c.id===line.productId)?.en??line.productId}</td><td>{quantityWithUnit(line.quantity,catalog.find(c=>c.id===line.productId)?.unit??'pc')}</td><td>৳ {money(line.unitCost)}</td><td>৳ {money(line.total)}</td></tr>)}</tbody></table></div>}
+      {p.mode === 'invoice' ? <div className="data-table-wrap"><table className="data-table supplier-bill-table"><thead><tr><th className="supplier-bill-product-col">{t('invoiceDescription')}</th><th className="numeric-cell">{t('quantity')}</th><th className="numeric-cell">{t('receivedQty')}</th><th className="numeric-cell">{t('remaining')}</th><th className="numeric-cell">{t('cost')}</th></tr></thead><tbody>{receiving.lines.map(l => <tr key={l.id}><td className="supplier-bill-product">{l.description}</td><td className="numeric-cell">{quantityWithUnit(l.quantity,l.unit)}</td><td className="numeric-cell">{quantityWithUnit(l.receivedQuantity,l.unit)}</td><td className="numeric-cell">{quantityWithUnit(l.remainingQuantity,l.unit)}</td><td className="numeric-cell">৳ {money(l.total)}</td></tr>)}</tbody></table></div>
+        : <div className="data-table-wrap"><table className="data-table supplier-bill-table"><thead><tr><th className="supplier-bill-product-col">{t('item')}</th><th className="numeric-cell">{t('quantity')}</th><th className="numeric-cell">{t('unitCost')}</th><th className="numeric-cell">{t('cost')}</th></tr></thead><tbody>{p.lines.map((line,index) => <tr key={index}><td className="supplier-bill-product">{catalog.find(c=>c.id===line.productId)?.en??line.productId}</td><td className="numeric-cell">{quantityWithUnit(line.quantity,catalog.find(c=>c.id===line.productId)?.unit??'pc')}</td><td className="numeric-cell">৳ {money(line.unitCost)}</td><td className="numeric-cell">৳ {money(line.total)}</td></tr>)}</tbody></table></div>}
       {(state.stockReceivings??[]).filter(r=>r.purchaseId===p.id).map(r=><details className="invoice-receiving-batch" key={r.id}><summary>{t('stockReceived')} · {date(r.createdAt)} · ৳ {money(r.lines.reduce((s,l)=>s+l.total,0))}</summary>{r.lines.map((l,i)=><p key={i}>{catalog.find(c=>c.id===l.productId)?.code} · {catalog.find(c=>c.id===l.productId)?.en} · {quantityWithUnit(l.quantity,catalog.find(c=>c.id===l.productId)?.unit??'pc')} · ৳ {money(l.total)}</p>)}{r.note&&<p>{r.note}</p>}</details>)}
       {p.note && <p>{p.note}</p>}{p.accountingIssue && <p className="field-error">{p.accountingIssue}</p>}
-      {account.known && <p>{t('paid')}: ৳ {money(account.paid)} · {t('settlement')}: ৳ {money(account.due)}</p>}
+      {account.known && <dl className="supplier-bill-payment-summary">
+        <div><dt>{t('paid')}</dt><dd>৳ {money(account.paid)}</dd></div>
+        <div className={account.due > 0 ? 'has-due' : ''}><dt>{t('settlement')}</dt><dd>৳ {money(account.due)}</dd></div>
+      </dl>}
       {reviews.find(r => r.purchaseId === p.id) && <p className="dialog-note">{t('reason')}: {reviews.find(r => r.purchaseId === p.id)!.note}</p>}
-      {account.known && account.initialPaid > 0 && <p className="dialog-note">{date(p.createdAt)} · {t('payment')} · ৳ {money(account.initialPaid)} · {account.method ? t(account.method) : ''}</p>}
-      {payments.filter(pay => pay.purchaseId === p.id).sort((a,b) => Date.parse(a.createdAt)-Date.parse(b.createdAt)).map(pay => <p className="dialog-note" key={pay.id}>{date(pay.createdAt)} · {t(pay.type === 'refund' ? 'refund' : 'payment')} · ৳ {money(pay.amount)} · {t(pay.method)}{pay.note ? ` · ${pay.note}` : ''}</p>)}
+      {(account.initialPaid > 0 || payments.some(pay => pay.purchaseId === p.id)) && <section className="supplier-payment-history" aria-label={t('payments')}>
+        <h4>{t('payments')}</h4>
+        <ul>
+          {account.initialPaid > 0 && <li>
+            <div><time dateTime={p.createdAt}>{date(p.createdAt)}</time><span>{t('payment')}</span></div>
+            <strong>৳ {money(account.initialPaid)}</strong>
+            <span>{account.method ? t(account.method) : ''}</span>
+          </li>}
+          {payments.filter(pay => pay.purchaseId === p.id).sort((a,b) => Date.parse(a.createdAt)-Date.parse(b.createdAt)).map(pay => <li key={pay.id}>
+            <div><time dateTime={pay.createdAt}>{date(pay.createdAt)}</time><span>{t(pay.type === 'refund' ? 'refund' : 'payment')}</span></div>
+            <strong>৳ {money(pay.amount)}</strong>
+            <span>{t(pay.method)}{pay.note && <small>{pay.note}</small>}</span>
+          </li>)}
+        </ul>
+      </section>}
       <div className="supplier-actions">
         {!p.voidedAt && !p.accountingIssue && p.mode === 'invoice' && receiving.status !== 'received' && <button className="primary-button" onClick={()=>{setReceivingId(p.id);setActiveReceivingPurchase(p);setPurchaseOpen(false);setTarget(null);setEditor(null);setError('')}}>{t('receiveStock')}</button>}
         {!p.voidedAt && !p.accountingIssue && (!account.known || account.due > 0) && <button className="primary-button" onClick={() => openTarget(p)}>{t(account.known ? 'pay' : 'review')}</button>}
@@ -147,7 +163,7 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
   const receivingTarget = (receivingId ? purchases.find(p => p.id === receivingId) : null) ?? activeReceivingPurchase
 
   return <section ref={viewRef} className="suppliers-view">
-    <div className="supplier-actions supplier-toolbar">{selected && <button className="secondary-button supplier-back" onClick={() => { setSelectedId(null); setTarget(null); setEditor(null); setPurchaseOpen(false); setReceivingId(null); setActiveReceivingPurchase(null) }}><Icon name="arrow-left" size={15}/>{t('back')}</button>}{!selected && <ReportWindowControl window={window} onWindow={onWindow} now={now} lang={lang} idPrefix="suppliers"/>}<button className="secondary-button" onClick={() => { setEditor({ id: crypto.randomUUID(), name: '' }); setPurchaseOpen(false); setTarget(null); setReceivingId(null); setActiveReceivingPurchase(null) }}><Icon name="plus" size={15}/>{t('add')}</button><button className="primary-button" onClick={() => { setPurchaseOpen(true); setEditor(null); setTarget(null); setReceivingId(null); setActiveReceivingPurchase(null) }}><Icon name="expenses" size={15}/>{t('purchase')}</button></div>
+    <div className="supplier-actions supplier-toolbar">{selected && <button className="secondary-button supplier-back" onClick={() => { setSelectedId(null); setTarget(null); setEditor(null); setPurchaseOpen(false); setReceivingId(null); setActiveReceivingPurchase(null) }}><Icon name="arrow-left" size={15}/>{t('back')}</button>}{!selected && <ReportWindowControl window={window} onWindow={onWindow} now={now} lang={lang} idPrefix="suppliers"/>}<button className="primary-button" onClick={() => { setPurchaseOpen(true); setEditor(null); setTarget(null); setReceivingId(null); setActiveReceivingPurchase(null) }}><Icon name="expenses" size={15}/>{t('purchase')}</button></div>
     {!selected && <div className="metrics-grid supplier-overview">{([
       { label: 'active', value: String(suppliers.filter(s => !s.archived).length), icon: 'suppliers' },
       { label: 'total', value: `৳ ${money(totals.total)}`, icon: 'expenses' },
@@ -237,7 +253,7 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
             <div className="supplier-filter">
               <label className="sr-only" htmlFor="supplier-search">{t('search')}</label>
               <div className="supplier-list-search"><Icon name="search" size={15}/><input id="supplier-search" className="form-input" type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder={t('search')}/></div>
-              <label className="supplier-archive-filter"><input type="checkbox" checked={showArchived} onChange={e => setShowArchived(e.target.checked)}/>{t('includeArchived')}</label>
+              <button className="secondary-button" onClick={() => { setEditor({ id: crypto.randomUUID(), name: '' }); setPurchaseOpen(false); setTarget(null); setReceivingId(null); setActiveReceivingPurchase(null) }}><Icon name="plus" size={15}/>{t('add')}</button>
             </div>
           </div>
           <div className="data-table-wrap"><table className="data-table supplier-table"><thead><tr><th>{t('name')}</th><th>{t('phone')}</th><th className="numeric-cell">{t('total')}</th><th className="numeric-cell">{t('due')}</th><th>{t('last')}</th><th><span className="sr-only">{t('viewSupplier')}</span></th></tr></thead><tbody>{matchingSuppliers.map(s => {

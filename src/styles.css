@@ -1,4 +1,4 @@
-:root{font-family:'DM Sans Variable','Helvetica Neue',Arial,sans-serif;color:#22231f;background:#e9e7de;font-synthesis:none;font-weight:450;--paper:#e9e7de;--white:#fcfcfa;--ink:#22231f;--muted:#8b8d83;--line:#e5e6de;--accent:#00853E;--mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'DM Sans Variable','Helvetica Neue',Arial,sans-serif;-webkit-font-smoothing:antialiased;font-size:14px}
+:root{font-family:'DM Sans Variable','Helvetica Neue',Arial,sans-serif;color:#22231f;background:#e9e7de;font-synthesis:none;font-weight:450;--paper:#e9e7de;--white:#fcfcfa;--ink:#22231f;--muted:#8b8d83;--line:#e5e6de;--accent:#00853E;--mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'DM Sans Variable','Helvetica Neue',Arial,sans-serif;--space:'Space Grotesk Variable','Space Grotesk','Noto Sans Bengali Variable',sans-serif;-webkit-font-smoothing:antialiased;font-size:14px}
 :root{--accent-bright:var(--accent);--accent-soft:#eaf6ec;--accent-border:#cce8d5;--motion-ease:cubic-bezier(.2,.75,.3,1);--motion-fast:120ms;--motion-standard:160ms}
 *{box-sizing:border-box}html,body{margin:0;overflow-x:hidden;max-width:100vw}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.42}button{background:none;border:0;padding:0}input{color:var(--ink);min-width:0}button,input{touch-action:manipulation}button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}input:focus-visible{outline:none}::selection{background:#d8f0df}h1,h2,h3,h4,p{margin:0}svg{flex-shrink:0}kbd{font-family:var(--mono);font-size:10px;font-weight:500;line-height:1;display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1px solid #dfe0d7;border-bottom-width:2px;border-radius:3px;padding:0 5px;background:#fafaf7;color:#74776b}code{font-family:var(--mono);font-size:11px}a{color:var(--accent)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .lang-bn{font-family:'DM Sans Variable','Helvetica Neue',Arial,'Noto Sans Bengali Variable',sans-serif}
@@ -2644,6 +2644,7 @@ body::-webkit-scrollbar-thumb,
 .dialog-customerProfile .tx-table{min-width:360px}
 .dialog-customerProfile .tx-table th,.dialog-customerProfile .tx-table td{padding:10px}
 .dialog-customerProfile .tx-table td:last-child{overflow-wrap:anywhere;min-width:90px}
+.dialog-customerProfile .customer-profile-history .tx-badge{white-space:nowrap}
 .dialog-customerProfile .dialog-actions{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);justify-content:flex-end}
 .dialog-customerProfile .dialog-actions>button{flex:0 1 160px}
 .modal.dialog-purchases{width:min(1040px,calc(100vw - 32px));padding:28px 30px;max-height:92dvh}
