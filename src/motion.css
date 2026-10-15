@@ -1,0 +1,111 @@
+/* Short feedback, stable text, and no permanent layer promotion. */
+.bill-row { position: relative; }
+.bill-row-feedback {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--accent-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Keep the value steady while the surrounding field responds to focus. */
+  .quantity-lane .quantity-field {
+    position: relative;
+    transition: border-color var(--motion-fast) var(--motion-ease),
+      box-shadow var(--motion-fast) var(--motion-ease),
+      background-color var(--motion-fast) var(--motion-ease);
+  }
+  .quantity-lane .quantity-field::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--focus);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--motion-standard) var(--motion-ease);
+    pointer-events: none;
+  }
+  .quantity-lane .quantity-field:focus-within::after { transform: scaleX(1); }
+  .quantity-lane .quantity-field>span:not(.sr-only) {
+    transition: color var(--motion-fast) var(--motion-ease),
+      translate var(--motion-fast) var(--motion-ease);
+  }
+  .quantity-lane .quantity-field:focus-within>span:not(.sr-only) {
+    color: var(--focus);
+    translate: 0 -1px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .row-enter, .payment-button-right>svg, .add-button>svg {
+      transition: translate var(--motion-standard) var(--motion-ease);
+    }
+    .product-row:hover .row-enter,
+    .payment-button:hover:not(:disabled) .payment-button-right>svg,
+    .add-button:hover:not(:disabled)>svg { translate: 2px 0; }
+    .metric-card:hover {
+      translate: 0 -2px;
+      box-shadow: var(--shadow-card-hover);
+      z-index: 1;
+    }
+  }
+
+  .metric-card {
+    position: relative;
+    transition: translate var(--motion-standard) var(--motion-ease), box-shadow var(--motion-standard) var(--motion-ease);
+  }
+
+  .payment-button, .primary-button, .add-button, .secondary-button {
+    transition: background-color var(--motion-fast) var(--motion-ease),color var(--motion-fast) var(--motion-ease),border-color var(--motion-fast) var(--motion-ease),translate var(--motion-fast) var(--motion-ease);
+  }
+  :is(.payment-button, .primary-button, .add-button, .secondary-button):active:not(:disabled) { translate: 0 1px; }
+  .quantity-lane.active .quantity-product-label { animation: ledger-fade 140ms ease-out; }
+  .modal { animation: modal-enter 160ms var(--motion-ease); }
+  .modal-backdrop--exiting .modal { animation: modal-exit 120ms ease-in both; }
+  .field-error, .metric-card>strong, .success-mark { animation: ledger-fade 150ms ease-out; }
+  .theme-toggle-btn>svg { animation: ledger-fade 130ms ease-out; }
+  .save-status.saved i { animation: ledger-fade 180ms ease-out; }
+
+  /* This stripe exists only while a payment request is pending. */
+  .dialog-payment button[type="submit"]:disabled { position: relative; overflow: hidden; }
+  .dialog-payment button[type="submit"]:disabled::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 25%;
+    height: 2px;
+    background: currentColor;
+    opacity: .5;
+    animation: ledger-saving 900ms ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes modal-enter {
+  from { translate: 0 6px; opacity: 0; }
+  to { translate: 0 0; opacity: 1; }
+}
+@keyframes modal-exit {
+  from { translate: 0 0; opacity: 1; }
+  to { translate: 0 4px; opacity: 0; }
+}
+@keyframes ledger-fade {
+  from { opacity: .6; }
+  to { opacity: 1; }
+}
+@keyframes ledger-saving {
+  from { translate: -100% 0; }
+  to { translate: 500% 0; }
+}
+
+.app-shell :where(button, a, summary, input, select, textarea) { transition-timing-function: var(--motion-ease); }
+@media print {
+  .bill-row-feedback { display: none; }
+  .modal, .metric-card>strong, .success-mark { animation: none !important; }
+  .metric-card { translate: none !important; box-shadow: none !important; }
+}

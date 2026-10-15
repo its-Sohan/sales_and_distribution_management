@@ -1,0 +1,17 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import AuthGate from './AuthGate'
+import '@fontsource-variable/dm-sans'
+import '@fontsource/merriweather-sans/latin-600.css'
+import '@fontsource/merriweather-sans/latin-700.css'
+import '@fontsource/merriweather-sans/latin-800.css'
+import '@fontsource/plus-jakarta-sans/latin-600.css'
+import '@fontsource/ibm-plex-mono/latin-400.css'
+import '@fontsource/ibm-plex-mono/latin-500.css'
+import '@fontsource/ibm-plex-mono/latin-600.css'
+import '@fontsource-variable/noto-sans-bengali'
+import './styles.css'
+import './theme.css'
+import './web-accessibility.css'
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><AuthGate /></React.StrictMode>)

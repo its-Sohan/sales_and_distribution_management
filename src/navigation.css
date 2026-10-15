@@ -1,0 +1,116 @@
+/* Task entry points and readable labels share the shop's existing palette. */
+.nav-button>span{line-height:1.3;white-space:normal;overflow-wrap:normal;text-align:center}
+.counter-tools{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 12px;flex-shrink:0}
+.sale-stepper{position:relative;width:min(100%,360px);height:38px;min-width:0}
+.sale-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;width:100%;height:100%;padding:0;margin:0;list-style:none;color:var(--muted);font-size:12px}
+.sale-steps li{position:static;display:flex;justify-content:center;padding-top:17px;line-height:1.4;white-space:nowrap}
+.sale-step-label{transition:color 160ms ease}
+.sale-steps .current{color:var(--ink);font-weight:600}
+.sale-steps .done{color:var(--accent)}
+.sale-step-track{position:absolute;top:5px;left:16.667%;width:66.666%;height:1px;background:var(--line)}
+.sale-step-progress{position:absolute;inset:0;background:var(--accent-ink);transform-origin:left center;transition:transform 220ms var(--motion-ease)}
+.sale-step-cursor{position:absolute;inset:0;transition:transform 220ms var(--motion-ease)}
+.sale-step-point{position:absolute;left:0;top:50%;width:8px;height:8px;border:1px solid var(--accent-ink);border-radius:50%;background:var(--white);box-shadow:0 0 0 3px var(--accent-soft);transform:translate(-50%,-50%)}
+.find-bill-trigger,.new-item-trigger{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 12px;font-size:12px;white-space:nowrap}
+.main-content .inventory-header-actions>button{min-height:38px;padding:0 12px;gap:7px;font-size:11px;white-space:nowrap}
+.main-content .quantity-lane .add-button{min-height:38px;flex-shrink:0;font-size:12px;font-weight:600}
+.connection.saving{color:var(--muted)}
+.connection.saving i{background:var(--muted)}
+.stock-row-button{border:1px solid var(--accent-border);background:var(--accent-soft);color:var(--accent);padding:6px 9px;font-size:11px;white-space:nowrap}
+.stock-row-button:hover{border-color:var(--accent);background:var(--accent-soft)}
+.row-actions{flex-wrap:wrap;justify-content:flex-end;row-gap:6px}
+.modal.dialog-findBill{width:880px}
+.modal.dialog-addStock{width:680px}
+.modal .task-search{margin:18px 0 0;min-height:44px;background:var(--white);border-color:var(--control-border,var(--line));box-shadow:var(--shadow-control)}
+.modal .task-search input{font-size:14px;color:var(--ink)}
+.modal .task-search input::placeholder{color:var(--muted)}
+.task-result-count{margin:12px 0;font-size:12px;color:var(--muted)}
+.bill-finder-list,.stock-picker-list{max-height:min(440px,48dvh);overflow:auto;border:1px solid var(--line);scrollbar-width:thin}
+.bill-finder-row{display:grid;grid-template-columns:120px minmax(0,1fr) auto 16px;gap:16px;align-items:center;width:100%;padding:14px;text-align:left;border-bottom:1px solid var(--line)}
+.bill-finder-row:last-child,.stock-picker-row:last-child{border-bottom:0}
+.bill-finder-row:hover,.stock-picker-row:hover{background:var(--accent-soft)}
+.bill-finder-row:focus-visible,.stock-picker-row:focus-visible{outline-offset:-3px}
+.bill-finder-number{font:13px var(--mono);font-weight:600}
+.bill-finder-row small{display:block;color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:400;line-height:1.5;margin-top:4px}
+.bill-finder-customer{min-width:0}
+.bill-finder-customer>strong{font-size:14px}
+.bill-finder-customer>small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bill-finder-amount{font:14px var(--mono);white-space:nowrap}
+.task-empty{min-height:190px;padding:24px 12px;gap:12px;text-align:center}
+.task-empty h4{font-size:17px;font-weight:600}
+.task-empty p{font-size:13px;line-height:1.6;max-width:420px}
+.task-empty .text-button{font-size:13px;min-height:38px}
+.task-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;font-size:12px}
+.task-pagination button{min-height:38px;padding:8px 12px;font-size:12px}
+.stock-picker-list{margin-top:14px}
+.stock-picker-row{display:flex;align-items:center;gap:12px;text-align:left;width:100%;min-height:68px;padding:12px;border-bottom:1px solid var(--line)}
+.stock-picker-row>span:nth-child(2){flex:1;min-width:0}
+.stock-picker-row strong,.stock-selected-item strong{display:block;font-size:14px;font-weight:600}
+.stock-picker-row small,.stock-selected-item small{display:block;font-size:12px;line-height:1.5;color:var(--muted);margin-top:3px}
+.stock-picker-quantity{font:12px var(--mono);white-space:nowrap}
+.stock-selected-item{display:flex;align-items:center;gap:12px;background:var(--accent-soft);border:1px solid var(--accent-border);padding:12px;margin-top:16px}
+.stock-selected-item>div{flex:1;min-width:0}
+.stock-selected-item .text-button{font-size:12px;min-height:36px;flex-shrink:0}
+.stock-purchase-fields{margin:20px 0 12px;gap:16px}
+.stock-purchase-fields .form-group label{font-size:13px;line-height:1.5}
+.stock-purchase-fields .form-input{min-height:44px;font-size:14px}
+.dialog-addStock .dialog-note{font-size:12px;line-height:1.6}
+.stock-purchase-preview{margin:18px 0 0;border:1px solid var(--line);background:var(--white);padding:12px}
+.stock-purchase-preview>div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:6px 0;font-size:13px}
+.stock-purchase-preview dt{color:var(--muted)}
+.stock-purchase-preview dd{margin:0;font:13px var(--mono);text-align:right}
+.dialog-addStock .dialog-actions button{font-size:13px;min-height:44px}
+
+@media(min-width:1101px){
+  .sidebar{width:73px}
+  .brand-mark{width:73px}
+  .main-shell{margin-left:73px}
+  .side-nav{padding:22px 8px;gap:6px}
+  .side-nav .nav-button{width:57px;height:67px;min-height:0;flex-direction:column;justify-content:center;padding:8px 3px;gap:5px}
+  .side-nav .nav-button>span{font-size:11px;line-height:1.3;text-align:center}
+  .side-nav .nav-button.active:before{left:-8px}
+  .app-shell>.toast{left:calc(50% + 36px)}
+}
+@media(min-width:681px) and (max-width:1100px){
+  .sale-steps{gap:10px;font-size:11px}
+  .nav-button>span{font-size:11px}
+}
+@media(max-width:680px){
+  .sidebar{width:52px}
+  .brand-mark{width:52px}
+  .main-shell{margin-left:52px;width:calc(100vw - 52px);max-width:calc(100vw - 52px)}
+  .side-nav{padding:8px 3px;gap:5px}
+  .nav-button{width:46px;height:46px;min-height:0;padding:4px 2px;gap:3px}
+  .nav-button>span{font-size:8.75px;line-height:1.3}
+  .nav-button>svg{width:19px;height:19px}
+  .side-bottom .nav-button{height:36px;min-height:0}
+  .app-shell>.toast{left:calc(50% + 36px);max-width:calc(100vw - 88px);min-width:0}
+  .counter-tools{gap:8px;margin-bottom:10px}
+  .sale-stepper{flex:1;width:auto;height:36px}
+  .sale-steps{display:block;font-size:11px}
+  .sale-steps li{display:none}
+  .sale-steps li.current{display:flex;padding-top:17px}
+  .sale-step-track{left:8px;width:auto;right:8px}
+  .find-bill-trigger{font-size:12px;min-height:40px;padding:8px}
+  .main-content .quantity-lane.active form{flex-wrap:wrap;padding-block:10px;gap:8px}
+  .main-content .quantity-product-label{flex-basis:100%}
+  .main-content .quantity-field{flex:1;height:40px;width:80px;min-width:60px}
+  .main-content .quantity-lane .add-button{min-height:40px;font-size:12px;padding:0 12px}
+  .main-content .inventory-header-actions{gap:8px}
+  .main-content .inventory-header-actions>button{min-height:40px;font-size:12px}
+  .modal.dialog-findBill,.modal.dialog-addStock{padding:28px 18px}
+  .modal .task-search input{font-size:16px}
+  .bill-finder-row{grid-template-columns:minmax(0,1fr) auto 16px;gap:8px;padding:12px}
+  .bill-finder-number{grid-column:1;grid-row:1}
+  .bill-finder-customer{grid-column:1;grid-row:2}
+  .bill-finder-amount{grid-column:2;grid-row:1/3;font-size:13px}
+  .bill-finder-row>svg{grid-column:3;grid-row:1/3}
+  .stock-picker-row{gap:8px}
+  .stock-picker-quantity{display:none}
+  .stock-selected-item{flex-wrap:wrap}
+  .stock-selected-item>.text-button{margin-left:auto}
+  .stock-purchase-fields{grid-template-columns:1fr}
+  .stock-purchase-fields .form-input{font-size:16px}
+  .stock-purchase-preview>div{font-size:12px;gap:8px}
+  .stock-purchase-preview dd{font-size:12px}
+}

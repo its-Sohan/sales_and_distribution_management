@@ -1,0 +1,37 @@
+[
+  {
+    "productId": "mouse-opt",
+    "quantity": 45000,
+    "inventoryValue": 10800,
+    "source": "Opening physical inventory count and supplier invoice baseline",
+    "asOf": "2026-10-01T00:00:00Z"
+  },
+  {
+    "productId": "mouse-wireless",
+    "quantity": 30000,
+    "inventoryValue": 13500,
+    "source": "Opening physical inventory count and supplier invoice baseline",
+    "asOf": "2026-10-01T00:00:00Z"
+  },
+  {
+    "productId": "pendrive-32gb",
+    "quantity": 40000,
+    "inventoryValue": 13600,
+    "source": "Opening physical inventory count and supplier invoice baseline",
+    "asOf": "2026-10-01T00:00:00Z"
+  },
+  {
+    "productId": "cable-lan",
+    "quantity": 40000,
+    "inventoryValue": 3200,
+    "source": "Opening physical inventory count and supplier invoice baseline",
+    "asOf": "2026-10-01T00:00:00Z"
+  },
+  {
+    "productId": "ssd-128gb",
+    "quantity": 25000,
+    "inventoryValue": 29500,
+    "source": "Opening physical inventory count and supplier invoice baseline",
+    "asOf": "2026-10-01T00:00:00Z"
+  }
+]

@@ -1,0 +1,195 @@
+/* Semantic colors shared by the counter, reports, and every dialog. */
+:root {
+  color-scheme: light;
+  --surface: var(--white);
+  --surface-chrome: #fafaf7;
+  --surface-inset: #f3f4ee;
+  --surface-input: #fcfcfa;
+  --surface-hover: #eef1e8;
+  --text-secondary: #62665c;
+  --muted: var(--text-secondary);
+  --tiny-text-contrast: var(--text-secondary);
+  --accent-ink: #006c35;
+  --accent-bright: var(--accent-ink);
+  --accent-hover: #006a33;
+  --accent-selected: #d9f0df;
+  --focus: #007a39;
+  --success: #246b3b;
+  --success-soft: #eaf4ec;
+  --success-border: #bfdcc7;
+  --warning: #815719;
+  --warning-soft: #faf2e2;
+  --warning-border: #dfcba3;
+  --danger: #b3261e;
+  --danger-soft: #fbecea;
+  --danger-border: #eac4bd;
+  --selection: #ccebd4;
+  --preview-background: #e6e9e6;
+  --backdrop: rgba(24, 28, 20, .42);
+}
+
+:root[data-theme="dark"], :root.dark {
+  color-scheme: dark;
+  --surface-chrome: #232325;
+  --surface-inset: #202023;
+  --surface-input: #1e1e20;
+  --surface-hover: #2d2d30;
+  --text-secondary: #b9b9bf;
+  --accent-ink: #78d99e;
+  --accent-hover: #006a33;
+  --accent-selected: #204c32;
+  --focus: #78d99e;
+  --success: #8bd5a2;
+  --success-soft: #1c3325;
+  --success-border: #375f44;
+  --warning: #edc47b;
+  --warning-soft: #342b1e;
+  --warning-border: #675333;
+  --danger: #ff9b91;
+  --danger-soft: #3c2424;
+  --danger-border: #71423e;
+  --selection: #285438;
+  --preview-background: #19191b;
+  --backdrop: rgba(0, 0, 0, .62);
+  --sidebar-border: var(--line);
+}
+
+/* Receipt pages keep their own paper palette, including during theme changes. */
+@media screen {
+  :root, :root body { background: var(--paper); color: var(--ink); }
+  :root ::selection { background: var(--selection); color: var(--ink); }
+  :root .app-shell :is(.sidebar, .topbar, .shortcut-bar) { background: var(--surface-chrome); }
+  :root .app-shell :is(.panel, .metric-card, .modal, .report-panel, .return-main, .return-summary, .return-actions) {
+    background: var(--white);
+    border-color: var(--card-border);
+  }
+  :root .app-shell :is(.bill-summary, .quantity-lane, .customer-stat-card, .item-detail-subcard,
+    .profile-stats>div, .profile-details>div, .variant-toggle-row, .restock-box, .co-purchase-section) {
+    background: var(--surface-inset);
+    border-color: var(--card-border);
+  }
+  :root .app-shell .modal-backdrop { background: var(--backdrop); }
+  :root .app-shell .receipt-preview { background: var(--preview-background); border-color: var(--line); }
+
+  :root .app-shell :is(.form-input, .quantity-field, .money-input, .search-box, .table-search,
+    .report-search, .report-filters select, .variant-builder-row input, .return-item-controls input, .return-item-controls select,
+    .exchange-add-row input, .exchange-add-row select, .return-table input, .return-item-input select) {
+    background-color: var(--surface-input);
+    color: var(--ink);
+    border-color: var(--control-border);
+  }
+  :root .app-shell :is(.search-box, .table-search, .report-search):focus-within {
+    background-color: var(--surface-input);
+    color: var(--accent-ink);
+  }
+  :root .app-shell :is(input, textarea)::placeholder { color: var(--text-secondary); opacity: 1; }
+  :root .app-shell select option { background: var(--surface-input); color: var(--ink); }
+  :root .app-shell :is(button, a, summary, input, select, textarea):focus-visible { outline-color: var(--focus); }
+  :root .app-shell :is(.search-box, .table-search, .report-search, .quantity-field, .money-input):focus-within,
+  :root .app-shell :is(.form-input, .report-filters select, .variant-builder-row input, .return-item-controls input,
+    .return-item-controls select, .exchange-add-row input, .exchange-add-row select):focus {
+    border-color: var(--focus);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--focus) 18%, transparent);
+  }
+
+  :root .app-shell :is(.eyebrow, .page-heading p, .heading-date, .section-number, .panel-heading-meta,
+    .product-info>span, .product-info code, .product-price>span, .bill-product small, .bill-product small>span,
+    .bill-line-index, .quantity-placeholder, .catalog-footnote, .payment-caption, .summary-row,
+    .summary-row>span:last-child, .summary-row small, .total-row small, .customer-select small,
+    .modal-description, .dialog-note, .data-footnote, .inventory-product small, .purchase-line>span,
+    .empty-state, .today-summary, .footer-brand>span:last-child, .report-chart-detail,
+    .customer-stat-card span, .restock-box-desc, .restock-grid>div>small, .variant-table th,
+    .return-table th, .return-remaining, .return-hint-line, .adjust-append-note, .returns-list>div) {
+    color: var(--text-secondary);
+  }
+  :root .app-shell :is(.empty-state h3, .today-summary>strong, .bill-number, .total-row>strong>span) { color: var(--ink); }
+  :root .app-shell :is(.product-table-head, .bill-table-head, .data-table th, .tx-table th) {
+    color: var(--text-secondary);
+    border-color: var(--line);
+  }
+  :root .app-shell :is(.data-table td, .tx-table td, .return-table td, .variant-table td,
+    .product-row, .bill-row, .bill-customer, .catalog-footnote) { border-color: var(--line); }
+  :root .app-shell :is(.data-table th, .tx-table th, .variant-table th, .restock-grid) { background: var(--surface-inset); }
+  :root .app-shell :is(.avatar, .customer-avatar, .customer-profile-avatar, .initial-avatar) {
+    background: var(--surface-inset); color: var(--text-secondary); border-color: var(--line);
+  }
+  :root .app-shell kbd { background: var(--surface-inset); color: var(--text-secondary); border-color: var(--control-border); }
+  :root .app-shell :is(.primary-button, .payment-button, .add-button) kbd {
+    background: #ffffff14; color: #fff; border-color: #ffffff4a;
+  }
+
+  :root .app-shell :is(.theme-toggle-btn, .secondary-button, .category-tabs>button:not(.active),
+    .payment-methods>button:not(.active), .setting-language button:not(.active),
+    .tx-action-bar button, .co-purchase-chip) { background: var(--white); color: var(--ink); }
+  :root .app-shell :is(.nav-button, .icon-button, .report-window-label) { color: var(--text-secondary); }
+  :root .app-shell :is(.nav-button.active, .category-tabs>button.active, .reports-tab-toggle>button.active,
+    .payment-methods>button.active, .setting-language button.active,
+    .provision-type-btn.active, .stock-row-button) {
+    background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent-border);
+  }
+  :root .app-shell .provision-type-btn.active .provision-type-icon { color: inherit; }
+  :root .app-shell .main-content .quantity-lane.active {
+    background: var(--accent-selected); border-color: var(--accent-border);
+  }
+  :root .app-shell .bill-list:focus .bill-selected { background: var(--accent-soft); }
+  :root .app-shell .main-content .catalog-panel .product-row.selected::before { background: var(--accent-ink); }
+  :root .app-shell :is(.text-button, .sale-steps .done, .return-step, .return-text-button,
+    .return-count, .return-outcome strong, .return-quantity-control button, .report-profit,
+    .report-profit-total dt, .report-profit-total dd:not(.report-loss)) { color: var(--accent-ink); }
+  :root .app-shell :is(.primary-button, .payment-button, .add-button, .provision-trigger):hover:not(:disabled) {
+    background: var(--accent-hover);
+  }
+  :root .app-shell .bill-panel :is(.customer-select, .clear-button, .discount-button, .bill-qty) { background: transparent; }
+  :root .app-shell .main-content .clear-button { color: var(--text-secondary); }
+  :root .app-shell .bill-summary .discount-button { color: var(--text-secondary); }
+  :root .app-shell .bill-row .bill-qty:hover:not(:disabled) { color: var(--accent-ink); }
+
+  @media (hover: hover) and (pointer: fine) {
+    :root .app-shell :is(.nav-button:not(.active), .secondary-button, .theme-toggle-btn,
+      .category-tabs>button:not(.active), .setting-language button:not(.active),
+      .tx-action-bar button, .co-purchase-chip, .add-variant-btn):hover:not(:disabled),
+    :root .app-shell :is(.product-row:not(.selected):not(.entering), .clickable-row, .customer-account-row,
+      .stock-account-row, .expense-account-row, .tx-table tbody tr:not(.purchase-voided-row)):hover {
+      background: var(--surface-hover);
+    }
+    :root .app-shell :is(.text-button, .discount-button, .clear-button):hover:not(:disabled) { color: var(--accent-ink); }
+  }
+
+  :root .app-shell :is(.margin-preview, .adjust-preview-row, .change-row) {
+    background: var(--success-soft); color: var(--success); border-color: var(--success-border);
+  }
+  :root .app-shell :is(.margin-badge, .profit-text, .margin-preview strong, .settled-badge,
+    .customer-stat-card.credit strong) { color: var(--success); }
+  :root .app-shell :is(.tx-badge.payment, .tx-badge.credit_adjust, .report-status.paid, .restock-box-badge) {
+    background: var(--success-soft); color: var(--success); border-color: var(--success-border);
+  }
+  :root .app-shell .data-table :is(.settled-badge, .tx-badge.payment) { background: transparent; }
+  :root .app-shell :is(.storage-alert, .report-status.due) {
+    background: var(--warning-soft); color: var(--warning); border-color: var(--warning-border);
+  }
+  :root .app-shell :is(.report-due-text, .customer-due-chip) { color: var(--warning); }
+  :root .app-shell :is(.change-row.due, .tx-badge.sale_due, .tx-badge.negative, .void-badge) {
+    background: var(--danger-soft); color: var(--danger); border-color: var(--danger-border);
+  }
+  :root .app-shell :is(.due-amount, .field-error, .report-export-error, .report-loss,
+    .customer-stat-card.due strong, .variant-builder-row .remove-variant-btn, .backend-recovery) { color: var(--danger); }
+  :root .app-shell .variant-builder-row .remove-variant-btn:hover:not(:disabled) { background: var(--danger-soft); }
+  :root .app-shell .connection { color: var(--success); }
+  :root .app-shell .connection i { background: var(--success); }
+  :root .app-shell .connection.offline { color: var(--danger); }
+  :root .app-shell .connection.offline i { background: var(--danger); }
+  :root .app-shell .connection.saving { color: var(--text-secondary); }
+  :root .app-shell .connection.saving i { background: var(--text-secondary); }
+  :root .app-shell .modal-close { background: var(--surface-inset); color: var(--text-secondary); border-color: var(--line); }
+  :root .app-shell .modal-close:hover:not(:disabled):not(.active) { background: var(--surface-hover); color: var(--ink); }
+  :root .app-shell :is(.clear-button, .discount-button, .bill-qty, .modal-close):hover:not(:disabled) { transform: none; }
+}
+
+/* Suppress inherited control transitions for the two frames that commit a palette switch. */
+@media screen {
+  :root.theme-switching, :root.theme-switching body,
+  .theme-switching .app-shell, .theme-switching .app-shell *,
+  .theme-switching .app-shell *::before, .theme-switching .app-shell *::after {
+    transition: none !important;
+  }
+}
