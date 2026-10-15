@@ -4,9 +4,24 @@ import { reportRange, reportWindowMode, dhakaDateKey, moveDate, moveMonth } from
 import { reportsTranslator } from './reportsCopy'
 import { translator } from './i18n'
 import { Icon } from './Icons'
-import { formatUiDate } from './dateFormat'
+import { dateInputLocale, formatDateInput, formatUiDate } from './dateFormat'
 
 export { moveDate, moveMonth }
+
+function DateInput({ id, value, label, autoFocus, onChange }: {
+  id: string
+  value: string
+  label: string
+  autoFocus?: boolean
+  onChange: (value: string) => void
+}) {
+  return (
+    <span className="date-input-control">
+      <input id={id} type="date" lang={dateInputLocale} autoFocus={autoFocus} aria-label={label} value={value} onChange={event => onChange(event.target.value)} />
+      <span aria-hidden="true">{formatDateInput(value)}</span>
+    </span>
+  )
+}
 
 export interface ReportWindowControlProps {
   window: ReportWindow
@@ -171,14 +186,12 @@ export function ReportWindowControl({
             {mode === 'day' && (
               <label className="report-period-editor-field">
                 <span>{rt('calendarDate')}</span>
-                <input
+                <DateInput
                   id={`${idPrefix}-date`}
-                  type="date"
-                  lang="en-GB"
                   autoFocus
-                  aria-label={rt('selectDate')}
+                  label={rt('selectDate')}
                   value={from}
-                  onChange={event => event.target.value && onWindow({ mode: 'day', date: event.target.value })}
+                  onChange={value => value && onWindow({ mode: 'day', date: value })}
                 />
               </label>
             )}
@@ -188,6 +201,7 @@ export function ReportWindowControl({
                 <input
                   id={`${idPrefix}-month`}
                   type="month"
+                  lang={dateInputLocale}
                   autoFocus
                   aria-label={rt('selectMonth')}
                   value={month}
@@ -199,37 +213,33 @@ export function ReportWindowControl({
               <>
                 <label className="report-period-editor-field">
                   <span>{rt('from')}</span>
-                  <input
+                  <DateInput
                     id={`${idPrefix}-range-from`}
-                    type="date"
-                    lang="en-GB"
                     autoFocus
-                    aria-label={rt('rangeFrom')}
+                    label={rt('rangeFrom')}
                     value={from}
-                    onChange={event => {
-                      if (!event.target.value) return
+                    onChange={value => {
+                      if (!value) return
                       onWindow({
                         mode: 'range',
-                        from: event.target.value,
-                        to: to < event.target.value ? event.target.value : to,
+                        from: value,
+                        to: to < value ? value : to,
                       })
                     }}
                   />
                 </label>
                 <label className="report-period-editor-field">
                   <span>{rt('to')}</span>
-                  <input
+                  <DateInput
                     id={`${idPrefix}-range-to`}
-                    type="date"
-                    lang="en-GB"
-                    aria-label={rt('rangeTo')}
+                    label={rt('rangeTo')}
                     value={to}
-                    onChange={event => {
-                      if (!event.target.value) return
+                    onChange={value => {
+                      if (!value) return
                       onWindow({
                         mode: 'range',
-                        from: from > event.target.value ? event.target.value : from,
-                        to: event.target.value,
+                        from: from > value ? value : from,
+                        to: value,
                       })
                     }}
                   />
@@ -243,4 +253,3 @@ export function ReportWindowControl({
     </div>
   )
 }
-

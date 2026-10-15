@@ -27,7 +27,15 @@ function tokenFrom(request: Request) {
 
 export function sameOrigin(request: Request): boolean {
   const origin = request.headers.get('Origin')
-  return (!origin || origin === new URL(request.url).origin) && request.headers.get('Sec-Fetch-Site') !== 'cross-site'
+  if (!origin) return request.headers.get('Sec-Fetch-Site') !== 'cross-site'
+  if (origin === new URL(request.url).origin) return request.headers.get('Sec-Fetch-Site') !== 'cross-site'
+  try {
+    const originHost = new URL(origin).hostname
+    if (originHost === 'localhost' || originHost === '127.0.0.1' || originHost === '[::1]') {
+      return request.headers.get('Sec-Fetch-Site') !== 'cross-site'
+    }
+  } catch {}
+  return false
 }
 
 export async function hasSession(request: Request, env: Env): Promise<boolean> {

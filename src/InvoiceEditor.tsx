@@ -3,6 +3,7 @@ import { computeTotalFromUnitCost, computeUnitCostFromTotal, makeInvoice, money,
 import { SupplierPicker, PurchasePaymentFields } from './SupplierFields'
 import { suppliersTranslator } from './suppliersCopy'
 import { Icon } from './Icons'
+import { dateInputLocale, formatDateInput } from './dateFormat'
 
 const today = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Dhaka' })
 export function InvoiceEditor({ suppliers, lang, supplierId: initial, purchases, onSave, onCancel }: {
@@ -124,7 +125,7 @@ export function InvoiceEditor({ suppliers, lang, supplierId: initial, purchases,
     <SupplierPicker suppliers={suppliers} lang={lang} value={supplierId} onChange={setSupplierId}/>
     <div className={`form-grid invoice-details${!supplierId ? ' has-seller' : ''}`}>
       {!supplierId && <div className="form-group invoice-seller"><label htmlFor="purchase-seller">{t('seller')}</label><input id="purchase-seller" className="form-input" value={seller} onChange={e => setSeller(e.target.value)} maxLength={200}/></div>}
-      <div className="form-group"><label htmlFor="purchase-date">{t('date')}</label><input id="purchase-date" className="form-input" type="date" lang="en-GB" max={today()} value={purchaseDate} required onChange={e => setDate(e.target.value)}/></div>
+      <div className="form-group"><label htmlFor="purchase-date">{t('date')}</label><span className="date-input-control form-input-control"><input id="purchase-date" className="form-input" type="date" lang={dateInputLocale} max={today()} value={purchaseDate} required onChange={e => setDate(e.target.value)}/><span aria-hidden="true">{formatDateInput(purchaseDate)}</span></span></div>
       <div className="form-group"><label htmlFor="purchase-invoice">{t('invoice')}</label><input id="purchase-invoice" className="form-input" value={invoiceNumber} onChange={e => setInvoice(e.target.value)} maxLength={200}/></div>
     </div>
     {lines.map((l,index) => <fieldset className="invoice-entry-line" key={l.id}><legend>{t('invoiceLine')} {index + 1}</legend>

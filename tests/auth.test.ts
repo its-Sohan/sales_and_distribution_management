@@ -84,6 +84,8 @@ test('cross-origin login, logout, and financial writes are rejected before chang
   for (const path of ['/api/auth/login', '/api/auth/logout', '/api/workspace']) {
     assert.equal((await f.fetch(path, loginRequest('admin?6767', { Origin: 'https://other.test', Cookie: cookie }))).status, 403)
   }
+  assert.equal((await f.fetch('/api/auth/login', loginRequest('admin?6767', { Origin: 'http://localhost:5173' }))).status, 200)
+  assert.equal((await f.fetch('/api/auth/login', loginRequest('admin?6767', { Origin: 'http://127.0.0.1:8787' }))).status, 200)
   assert.equal((await f.fetch('/api/auth/logout', { method: 'POST', headers: { 'Sec-Fetch-Site': 'cross-site', Cookie: cookie } })).status, 403)
   assert.equal((await f.fetch('/api/workspace', { headers: { Cookie: cookie } })).status, 200)
 })

@@ -5,6 +5,13 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
   year: 'numeric',
 })
 
+export const dateInputLocale = 'en-GB'
+
+export const formatDateInput = (value: string) => {
+  const [year, month, day] = value.split('-')
+  return year && month && day ? `${day}/${month}/${year}` : ''
+}
+
 const memoTimeFormatter = new Intl.DateTimeFormat('en-US', {
   timeZone: 'Asia/Dhaka',
   hour: 'numeric',

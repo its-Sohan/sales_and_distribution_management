@@ -11,8 +11,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "<name of database>",
-      "database_id": "id",
+      "database_name": "mayer-dowa-telecom-database-main",
+      "database_id": "0841fd4a-2046-4057-8530-d03856ce67cd",
       "migrations_dir": "migrations"
     }
   ]

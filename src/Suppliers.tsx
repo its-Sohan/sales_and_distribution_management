@@ -21,6 +21,7 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
   const [editor, setEditor] = useState<Supplier | null>(null), [purchaseOpen, setPurchaseOpen] = useState(false), [target, setTarget] = useState<Purchase | null>(null)
   const [paid, setPaid] = useState(''), [method, setMethod] = useState<PaymentMethod>('cash'), [reviewSupplier, setReviewSupplier] = useState(''), [reason, setReason] = useState('')
   const [error, setError] = useState(''), [saving, setSaving] = useState(false)
+  const [downloadingPoId, setDownloadingPoId] = useState<string | null>(null)
   const viewRef = useRef<HTMLElement>(null)
   const targetFormRef = useRef<HTMLFormElement | null>(null)
   const modalRef = useRef<ModalHandle>(null)
@@ -58,6 +59,20 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
     requestAnimationFrame(scrollToTargetForm)
   }
   const date = (value: string) => formatUiDateTime(value)
+  const downloadPoReceipt = async (p: Purchase) => {
+    if (downloadingPoId) return
+    setDownloadingPoId(p.id); setError('')
+    try {
+      const { buildPurchaseOrderReceipt } = await import('./purchaseReport')
+      const { downloadPurchaseOrderReceiptPdf } = await import('./purchaseReportPdf')
+      const receiptData = buildPurchaseOrderReceipt(p, state, catalog, lang, now)
+      await downloadPurchaseOrderReceiptPdf(receiptData)
+    } catch {
+      setError(t('reportError'))
+    } finally {
+      setDownloadingPoId(null)
+    }
+  }
   const purchaseDetail = (p: Purchase) => {
     const account = purchaseAccount(p, payments, reviews)
     const receiving = invoiceReceivingStatus(p, state.stockReceivings)
@@ -70,7 +85,24 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
           <span className={`supplier-status ${p.mode === 'invoice' && receiving.status !== 'received' ? 'supplier-status-pending' : 'supplier-status-neutral'}`}>{p.mode === 'invoice' ? t(receiving.status) : t('earlierStock')}</span>
           {!account.known && <span className="supplier-status supplier-status-pending">{t('unknown')}</span>}
         </>}</span>
-        <span className="supplier-bill-amount"><strong>৳ {money(p.total)}</strong>{!p.voidedAt && account.known && <small className={account.due > 0 ? 'supplier-balance-due' : 'supplier-balance-paid'}>{account.due > 0 ? `Due: ৳ ${money(account.due)}` : t('settled')}</small>}</span>
+        <div className="supplier-bill-pricing">
+          <span className="supplier-bill-amount"><strong>৳ {money(p.total)}</strong>{!p.voidedAt && account.known && <small className={account.due > 0 ? 'supplier-balance-due' : 'supplier-balance-paid'}>{account.due > 0 ? `Due: ৳ ${money(account.due)}` : t('settled')}</small>}</span>
+          <button
+            type="button"
+            className="supplier-bill-pdf-btn"
+            title={`${t('downloadPoSummary')}: ${p.invoiceNumber || p.id}`}
+            aria-label={`${t('downloadPoSummary')}: ${p.invoiceNumber || p.id}`}
+            disabled={downloadingPoId === p.id}
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+              void downloadPoReceipt(p)
+            }}
+          >
+            <Icon name="download" size={13}/>
+            <span>{downloadingPoId === p.id ? '…' : 'PO PDF'}</span>
+          </button>
+        </div>
       </summary>
       <div className="supplier-bill-content">
       {p.mode === 'invoice' ? <div className="data-table-wrap"><table className="data-table"><thead><tr><th>{t('invoiceDescription')}</th><th>{t('quantity')}</th><th>{t('receivedQty')}</th><th>{t('remaining')}</th><th>{t('cost')}</th></tr></thead><tbody>{receiving.lines.map(l => <tr key={l.id}><td>{l.description}</td><td>{quantityWithUnit(l.quantity,l.unit)}</td><td>{quantityWithUnit(l.receivedQuantity,l.unit)}</td><td>{quantityWithUnit(l.remainingQuantity,l.unit)}</td><td>৳ {money(l.total)}</td></tr>)}</tbody></table></div>
@@ -81,7 +113,12 @@ export function Suppliers({ state, catalog, lang, now, window, onWindow, purchas
       {reviews.find(r => r.purchaseId === p.id) && <p className="dialog-note">{t('reason')}: {reviews.find(r => r.purchaseId === p.id)!.note}</p>}
       {account.known && account.initialPaid > 0 && <p className="dialog-note">{date(p.createdAt)} · {t('payment')} · ৳ {money(account.initialPaid)} · {account.method ? t(account.method) : ''}</p>}
       {payments.filter(pay => pay.purchaseId === p.id).sort((a,b) => Date.parse(a.createdAt)-Date.parse(b.createdAt)).map(pay => <p className="dialog-note" key={pay.id}>{date(pay.createdAt)} · {t(pay.type === 'refund' ? 'refund' : 'payment')} · ৳ {money(pay.amount)} · {t(pay.method)}{pay.note ? ` · ${pay.note}` : ''}</p>)}
-      {!p.voidedAt && !p.accountingIssue && <div className="supplier-actions">{p.mode==='invoice'&&receiving.status!=='received'&&<button className="primary-button" onClick={()=>{setReceivingId(p.id);setActiveReceivingPurchase(p);setPurchaseOpen(false);setTarget(null);setEditor(null);setError('')}}>{t('receiveStock')}</button>}{(!account.known || account.due > 0) && <button className="primary-button" onClick={() => openTarget(p)}>{t(account.known ? 'pay' : 'review')}</button>}<button className="secondary-button" onClick={() => onVoid(p)}>{t('void')}</button></div>}
+      <div className="supplier-actions">
+        {!p.voidedAt && !p.accountingIssue && p.mode === 'invoice' && receiving.status !== 'received' && <button className="primary-button" onClick={()=>{setReceivingId(p.id);setActiveReceivingPurchase(p);setPurchaseOpen(false);setTarget(null);setEditor(null);setError('')}}>{t('receiveStock')}</button>}
+        {!p.voidedAt && !p.accountingIssue && (!account.known || account.due > 0) && <button className="primary-button" onClick={() => openTarget(p)}>{t(account.known ? 'pay' : 'review')}</button>}
+        <button className="secondary-button" type="button" disabled={downloadingPoId === p.id} onClick={() => void downloadPoReceipt(p)}><Icon name="download" size={14}/>{t(downloadingPoId === p.id ? 'downloadingReport' : 'poReceipt')}</button>
+        {!p.voidedAt && !p.accountingIssue && <button className="secondary-button" onClick={() => onVoid(p)}>{t('void')}</button>}
+      </div>
       {p.voidedAt && <p className="dialog-note">{date(p.voidedAt)} · {p.voidReason}</p>}
       </div>
     </details>

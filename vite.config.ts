@@ -22,12 +22,12 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8787',
+        target: process.env.VITE_API_TARGET || 'http://127.0.0.1:8787',
         changeOrigin: true,
         configure(proxy) {
-          // The worker checks Origin against its request URL. Browsers send
-          // the Vite page origin, so align it with the local proxy target.
-          proxy.on('proxyReq', proxyReq => proxyReq.setHeader('Origin', 'http://127.0.0.1:8787'))
+          const apiTarget = process.env.VITE_API_TARGET || 'http://127.0.0.1:8787'
+          // The worker checks Origin against its request URL. Align it with the target origin.
+          proxy.on('proxyReq', proxyReq => proxyReq.setHeader('Origin', new URL(apiTarget).origin))
         },
       },
     },

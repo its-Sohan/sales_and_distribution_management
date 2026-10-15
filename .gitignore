@@ -4,3 +4,7 @@ dist/
 .wrangler/
 .env*
 !.env.example
+scripts/historical_seed_data.json
+scripts/seed_historical_remote.sql
+scripts/seed_part_*.sql
+tmp/

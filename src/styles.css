@@ -1902,6 +1902,14 @@
 .report-period-editor-field{display:flex;flex-direction:column;gap:8px;min-width:0}
 .report-period-editor-field>span{font-size:11px;color:var(--muted)}
 .report-period-editor-field input{width:100%;min-width:0;min-height:42px;padding:8px;border:1px solid var(--control-border,var(--line));background:var(--white);font:12px var(--mono);color-scheme:light}
+.date-input-control{position:relative;display:block}
+.date-input-control>input::-webkit-datetime-edit{color:transparent}
+.date-input-control>input:focus-visible::-webkit-datetime-edit{color:transparent}
+.date-input-control>span{position:absolute;inset:0;display:flex;align-items:center;padding:8px;pointer-events:none;font:12px var(--mono);color:var(--ink)}
+.report-period-editor-field .date-input-control>input{position:relative;z-index:1}
+.report-period-editor-field .date-input-control>span{z-index:2}
+.form-input-control>input{width:100%}
+.form-input-control>span{inset:1px}
 .report-period-editor-field input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .report-period-editor-actions{display:flex;justify-content:flex-end;margin-top:16px}
 .report-period-editor .report-period-editor-actions>button{display:flex;align-items:center;justify-content:center;min-height:36px;padding:8px 16px;background:var(--accent);color:#fff;font-size:12px}

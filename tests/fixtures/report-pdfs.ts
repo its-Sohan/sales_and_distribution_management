@@ -1,6 +1,8 @@
 import { renderCustomerHistoryPdf, type CustomerHistoryPdfData } from '../../src/customerHistoryPdf'
 import { renderSupplierReportPdf } from '../../src/supplierReportPdf'
 import { buildSupplierReport } from '../../src/supplierReport'
+import { renderPurchaseOrderSummaryPdf, renderPurchaseOrderReceiptPdf } from '../../src/purchaseReportPdf'
+import { buildPurchaseOrderSummaryReport, buildPurchaseOrderReceipt } from '../../src/purchaseReport'
 import { initialState, makeInvoice, type Lang } from '../../src/model'
 
 function customer(lang: Lang): CustomerHistoryPdfData {
@@ -48,7 +50,32 @@ function supplier(lang: Lang, long = false) {
   return buildSupplierReport(vendor, { ...initialState, purchases: [invoice], supplierPayments: [{ id: 'payment', purchaseId: invoice.id, supplierId: vendor.id, amount: 5000, type: 'payment', method: 'cash', createdAt: '2026-10-14T08:30:00Z', note: 'FINAL-PAYMENT-NOTE' }] }, [], lang, new Date('2026-10-15T10:30:00Z'))
 }
 
-const cases = ['customer-en', 'customer-bn', 'supplier-en', 'supplier-bn', 'supplier-long', 'supplier-long-bn', 'customer-long', 'customer-empty', 'supplier-empty', 'customer-warning', 'supplier-warning', 'customer-large-balance']
+function poSummary(lang: Lang) {
+  const vendor = { id: 'report-supplier', name: lang === 'bn' ? 'ঢাকা টেক ডিস্ট্রিবিউশন' : 'Dhaka Tech Distribution', phone: '01912-345678', address: 'Level 6, Multiplan Centre, Elephant Road, Dhaka' }
+  const inv1 = makeInvoice(
+    [{ id: 'line-1', description: lang === 'bn' ? 'Logitech ওয়্যারলেস মাউস' : 'Logitech wireless mouse', unit: 'pc', quantity: 5000, total: 3500 }],
+    { supplierId: vendor.id, invoiceNumber: 'INV-2026-101', paid: 2000, method: 'cash', createdAt: '2026-10-12T09:00:00Z' }
+  )
+  const inv2 = makeInvoice(
+    [{ id: 'line-2', description: lang === 'bn' ? 'A4Tech USB কিবোর্ড' : 'A4Tech USB keyboard', unit: 'pc', quantity: 3000, total: 1800 }],
+    { supplierId: vendor.id, invoiceNumber: 'INV-2026-102', paid: 1800, method: 'bank', createdAt: '2026-10-13T10:00:00Z' }
+  )
+  return buildPurchaseOrderSummaryReport([inv1, inv2], { ...initialState, suppliers: [vendor], purchases: [inv1, inv2] }, [], lang, new Date('2026-10-15T10:30:00Z'), { filterStatus: 'due', query: 'Logitech' })
+}
+
+function poReceipt(lang: Lang) {
+  const vendor = { id: 'report-supplier', name: lang === 'bn' ? 'ঢাকা টেক ডিস্ট্রিবিউশন' : 'Dhaka Tech Distribution', phone: '01912-345678', address: 'Level 6, Multiplan Centre, Elephant Road, Dhaka' }
+  const inv = makeInvoice(
+    [
+      { id: 'line-1', description: lang === 'bn' ? 'Logitech ওয়্যারলেস মাউস M185' : 'Logitech wireless mouse M185', unit: 'pc', quantity: 5000, total: 3500 },
+      { id: 'line-2', description: lang === 'bn' ? 'A4Tech USB কিবোর্ড KR-85' : 'A4Tech USB keyboard KR-85', unit: 'pc', quantity: 4000, total: 2400 },
+    ],
+    { supplierId: vendor.id, invoiceNumber: 'INV-2026-101', paid: 3500, method: 'bank', createdAt: '2026-10-12T09:00:00Z', note: 'Fragile equipment' }
+  )
+  return buildPurchaseOrderReceipt(inv, { ...initialState, suppliers: [vendor], purchases: [inv] }, [], lang, new Date('2026-10-15T10:30:00Z'))
+}
+
+const cases = ['customer-en', 'customer-bn', 'supplier-en', 'supplier-bn', 'supplier-long', 'supplier-long-bn', 'customer-long', 'customer-empty', 'supplier-empty', 'customer-warning', 'supplier-warning', 'customer-large-balance', 'po-summary-en', 'po-summary-bn', 'po-receipt-en', 'po-receipt-bn']
 Object.assign(window, { reportPdfCases: cases, async auditReportPdf(name: string) {
   const painted: Array<{ text: string; x: number; y: number; size: number; page: number }> = []
   const overflow: string[] = []
@@ -79,6 +106,12 @@ Object.assign(window, { reportPdfCases: cases, async auditReportPdf(name: string
       }
       if (name === 'customer-large-balance') data.balances[0].value = '৳ 99,999,999,999.99'
       bytes = await renderCustomerHistoryPdf(data)
+    } else if (name.startsWith('po-summary')) {
+      const data = poSummary(name.endsWith('bn') ? 'bn' : 'en')
+      bytes = await renderPurchaseOrderSummaryPdf(data)
+    } else if (name.startsWith('po-receipt')) {
+      const data = poReceipt(name.endsWith('bn') ? 'bn' : 'en')
+      bytes = await renderPurchaseOrderReceiptPdf(data)
     } else {
       const data = supplier(name.endsWith('bn') ? 'bn' : 'en', name.startsWith('supplier-long'))
       if (name === 'supplier-empty') data.rows = []

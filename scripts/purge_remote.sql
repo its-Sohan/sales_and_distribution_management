@@ -1,0 +1,13 @@
+DELETE FROM supplier_payments;
+DELETE FROM purchase_settlements;
+DELETE FROM stock_receivings;
+DELETE FROM purchases;
+DELETE FROM returns;
+DELETE FROM receipts;
+DELETE FROM account_transactions;
+DELETE FROM expenses;
+DELETE FROM stock_adjustments;
+DELETE FROM custom_products;
+DELETE FROM custom_customers;
+DELETE FROM suppliers;
+UPDATE app_revision SET revision = revision + 1 WHERE id = 1;
