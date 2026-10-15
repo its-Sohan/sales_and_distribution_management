@@ -7,7 +7,7 @@ import './login.css'
 
 const copy = {
   en: {
-    workspace: 'MASUM IT COTTAGE', hero: 'Your shop.', heroAccent: 'All in order.',
+    workspace: 'MAYER DOWA TELECOM & IT ACCESSORIES', hero: 'Your shop.', heroAccent: 'All in order.',
     description: 'From the first sale to the last receipt. One familiar place for your counter, stock, and accounts.',
     stock: 'Stock', accounts: 'Customers', suppliers: 'Suppliers', reports: 'Reports', ledger: 'A little clarity. Every day.',
     access: 'ADMIN ACCESS', welcome: 'Welcome back', hint: 'Sign in to open your shop workspace.',
@@ -65,9 +65,9 @@ export function Login({ lang, onLanguage, theme, onTheme, checking, unavailable,
   return <div className={`login-page lang-${lang}`}>
     <a className="skip-link" href="#login-content">{lang === 'bn' ? 'মূল বিষয়বস্তুতে যান' : 'Skip to main content'}</a>
     <header className="login-header">
-      <a className="login-brand" href="/" aria-label="Hisab — Masum IT Cottage"><PixelMark/><span className="wordmark">hisab<span>.</span></span></a>
+      <a className="login-brand" href="/" aria-label="Hisab — Mayer Dowa Telecom &amp; IT Accessories"><PixelMark/><span className="wordmark">hisab<span>.</span></span></a>
       <span className="login-brand-divider"/>
-      <span className="login-shop"><span>Masum</span> <strong>IT</strong> <span>Cottage</span></span>
+      <span className="login-shop"><span>Mayer Dowa</span> <strong>Telecom &amp; IT</strong> <span>Accessories</span></span>
       <div className="login-preferences">
         <button className="login-language" type="button" onClick={() => onLanguage(lang === 'en' ? 'bn' : 'en')} aria-label={lang === 'en' ? 'Switch to Bangla' : 'Switch to English'}><span className={lang === 'en' ? 'selected' : ''}>EN</span><span aria-hidden="true">/</span><span className={lang === 'bn' ? 'selected' : ''}>বাং</span></button>
         <button className="login-theme" type="button" onClick={onTheme} aria-label={theme === 'dark' ? t.themeLight : t.themeDark}><Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18}/></button>
@@ -106,6 +106,6 @@ export function Login({ lang, onLanguage, theme, onTheme, checking, unavailable,
       </section>
     </main>
 
-    <footer className="login-footer"><span>MASUM IT COTTAGE</span><span>{t.footer}</span><span>HISAB <span className="login-footer-dot">/</span> {new Date().getFullYear()}</span></footer>
+    <footer className="login-footer"><span>MAYER DOWA TELECOM &amp; IT ACCESSORIES</span><span>{t.footer}</span><span>HISAB <span className="login-footer-dot">/</span> {new Date().getFullYear()}</span></footer>
   </div>
 }

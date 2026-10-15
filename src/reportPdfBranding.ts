@@ -20,11 +20,11 @@ export function drawReportLetterhead(ctx: CanvasRenderingContext2D, logo: HTMLIm
   ctx.drawImage(logo, margin + (110 - logo.naturalWidth * scale) / 2, 55 + (110 - logo.naturalHeight * scale) / 2, logo.naturalWidth * scale, logo.naturalHeight * scale)
   const x = margin + 135
   ctx.textAlign = 'left'; ctx.font = `700 32px ${FONT}`
-  ctx.fillStyle = '#006b35'; ctx.fillText('Masum', x, 80)
-  const masum = ctx.measureText('Masum').width
-  ctx.fillStyle = '#e43b35'; ctx.fillText(' IT', x + masum, 80)
-  const it = ctx.measureText(' IT').width
-  ctx.fillStyle = '#006b35'; ctx.fillText(' Cottage', x + masum + it, 80)
+  ctx.fillStyle = '#006b35'; ctx.fillText('Mayer Dowa', x, 80)
+  const part1 = ctx.measureText('Mayer Dowa').width
+  ctx.fillStyle = '#e43b35'; ctx.fillText(' Telecom & IT', x + part1, 80)
+  const part2 = ctx.measureText(' Telecom & IT').width
+  ctx.fillStyle = '#006b35'; ctx.fillText(' Accessories', x + part1 + part2, 80)
   ctx.font = `600 18px ${FONT}`; ctx.fillStyle = '#40564c'
   ctx.fillText(reportBrand.tagline, x, 108)
   ctx.font = `400 18px ${FONT}`

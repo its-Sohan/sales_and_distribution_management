@@ -1,5 +1,5 @@
 {
-  "name": "masum-it",
+  "name": "mayer-dowa-telecom",
   "main": "worker/index.ts",
   "compatibility_date": "2026-10-08",
   "assets": {
@@ -11,8 +11,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "masum-it-cottage-account-database-main",
-      "database_id": "2b3b300a-1176-4210-8150-b9f27c68608e",
+      "database_name": "<name of database>",
+      "database_id": "id",
       "migrations_dir": "migrations"
     }
   ]

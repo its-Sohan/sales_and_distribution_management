@@ -1,6 +1,6 @@
 # Cloudflare deployment and backend architecture
 
-The browser calls a same-origin Cloudflare Worker API. The Worker accesses `masum-it-cottage-account-database-main` through its `DB` binding. D1 is the authoritative storage for shop records and terminal drafts.
+The browser calls a same-origin Cloudflare Worker API. The Worker accesses `mayer-dowa-telecom-database-main` through its `DB` binding. D1 is the authoritative storage for shop records and terminal drafts.
 
 ```text
 Browser → /api/workspace → Cloudflare Worker → D1
@@ -90,7 +90,7 @@ After rollout, verify historic receipt totals and refunds, affected customer bal
 ```sh
 npm install
 npm run build
-wrangler d1 migrations apply masum-it-cottage-account-database-main --local
+wrangler d1 migrations apply mayer-dowa-telecom-database-main --local
 wrangler dev
 ```
 
@@ -108,9 +108,9 @@ This command tests, checks Worker types, builds assets, applies remote migration
 
 `wrangler.jsonc` sends `/api/*` to the Worker before the SPA fallback. All registers share one shop database and use the admin sign-in described above.
 
-- Worker: `masum-it`
-- D1: `masum-it-cottage-account-database-main` (`2b3b300a-1176-4210-8150-b9f27c68608e`)
-- Deployment URL: `https://masum-it.stathammurphy141.workers.dev`
+- Worker: `mayer-dowa-telecom`
+- D1: `mayer-dowa-telecom-database-main`
+- Deployment URL: `https://mayer-dowa-telecom.stathammurphy141.workers.dev`
 
 
 ## Supplier ledger (migration 0010)

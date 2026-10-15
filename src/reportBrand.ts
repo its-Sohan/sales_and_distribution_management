@@ -3,7 +3,7 @@ import logo from './assets/mic-logo.jpg'
 // Use the receipt's original artwork and contact details on every report.
 export const reportBrand = {
   logo,
-  name: 'Masum IT Cottage',
+  name: 'Mayer Dowa Telecom & IT Accessories',
   tagline: 'ALL IT ACCESSORIES SALES & SOLUTIONS',
   address: ['Ovijhan - 3/1, Plabon Bhaban,', 'Surtaranga Road, Cheragali, Tongi, Gazipur.'],
   phone: '01717-270738, 01730-898910',

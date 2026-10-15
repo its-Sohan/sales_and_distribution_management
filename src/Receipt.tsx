@@ -70,7 +70,7 @@ export function Receipt({ receipt, lang, walkIn }: { receipt: SaleReceipt; lang:
         <header className="memo-branding">
           <CottageLogo className="memo-logo"/>
           <div className="memo-brand-copy">
-            <h2>Masum <span>IT</span> Cottage</h2>
+            <h2>Mayer Dowa <span>Telecom &amp; IT</span> Accessories</h2>
             <p className="memo-tagline">ALL <span>IT</span> ACCESSORIES SALES &amp; SOLUTIONS</p>
             <p className="memo-service">Service &amp; Sales to provide Corporate Office or Organization.</p>
           </div>

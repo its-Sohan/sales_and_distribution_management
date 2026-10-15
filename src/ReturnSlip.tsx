@@ -22,7 +22,7 @@ export function ReturnSlip({ entry, receipt, lang }: { entry: Return; receipt: R
   return <div className="receipt-preview" id="print-receipt">
     <article className="return-slip" aria-label={`${t('returnSlip')} ${entry.receiptNumber}`}>
       <header className="return-slip-header">
-        <div className="return-slip-brand"><CottageLogo className="return-slip-logo"/><div><span>MASUM IT COTTAGE</span><small>ALL IT ACCESSORIES SALES &amp; SOLUTIONS</small></div></div>
+        <div className="return-slip-brand"><CottageLogo className="return-slip-logo"/><div><span>MAYER DOWA TELECOM &amp; IT ACCESSORIES</span><small>ALL IT ACCESSORIES SALES &amp; SOLUTIONS</small></div></div>
         <div className="return-slip-title"><span className="return-slip-kicker">{t('returnSaved')}</span><h2>{t('returnSlip')}</h2><span className={`return-slip-type ${entry.replacementLines?.length ? 'is-exchange' : ''}`}>{t(entry.replacementLines?.length ? 'returnTypeExchange' : 'returnTypeRefund')}</span></div>
       </header>
 
@@ -66,7 +66,7 @@ export function ReturnSlip({ entry, receipt, lang }: { entry: Return; receipt: R
       <footer className="return-slip-footer">
         <div className="return-slip-reason"><span>{t('returnReason')}</span><p>{entry.reason ?? entry.note ?? '—'}</p></div>
         <div className="return-slip-signatures"><div><span>{entry.operator ?? '—'}</span><small>{t('processedBy')}</small></div><div><span></span><small>{t('returnCustomerSignature')}</small></div></div>
-        <p className="return-slip-thanks">MASUM IT COTTAGE <span>·</span> {t('returnSlip')}</p>
+        <p className="return-slip-thanks">MAYER DOWA TELECOM &amp; IT ACCESSORIES <span>·</span> {t('returnSlip')}</p>
       </footer>
     </article>
   </div>
