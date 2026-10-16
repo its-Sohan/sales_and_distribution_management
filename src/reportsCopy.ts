@@ -46,7 +46,7 @@ const bn: Record<keyof typeof en, string> = {
   paymentBreakdown: 'পেমেন্টের হিসাব', paymentHint: 'বিলের সময় নেওয়া টাকা', reconciliation: 'বিক্রির বিস্তারিত হিসাব',
   grossSales: 'ছাড়ের আগে বিক্রি', discounts: 'ছাড়', cost: 'বিক্রি করা পণ্যের কেনা খরচ',
   expenses: 'দোকানের খরচ', netProfit: 'খরচ বাদে লাভ', moneyOut: 'টাকা খরচ', stockPurchases: 'পণ্য কেনা', totalOut: 'মোট খরচ',
-  moneyMovement: 'নিট টাকার চলাচল', checkoutPayments: 'বিল ও বদলের টাকা', customerPayments: 'ক্রেতার জমা', totalIn: 'মোট টাকা আদায়',
+  moneyMovement: 'সর্বম‌োট টাকার চলাচল', checkoutPayments: 'বিল ও বদলের টাকা', customerPayments: 'ক্রেতার জমা', totalIn: 'মোট টাকা আদায়',
   refunds: 'ক্রেতাকে রিফান্ড', returnValue: 'ফেরতের মূল্য', returnsImpact: 'ফেরত ও রিফান্ড', returnNote: 'ফেরতে বিক্রি কমে; বিক্রিযোগ্য পণ্যের খরচ ফেরত আসে এবং বদলের পণ্যের বিক্রি ও খরচ যোগ হয়।',
   estimateHint: 'কিছু পুরোনো পণ্যের কেনা দাম নেই; আগের নিয়ম অনুযায়ী বিক্রয়মূল্যের ৮৫% কেনা খরচ ধরা হয়েছে।',
   serviceCostHint: 'কিছু সেবার খরচ নির্ধারিত হয়নি। খরচ লেখার পর লাভ দেখানো হবে।',

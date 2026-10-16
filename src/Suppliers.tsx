@@ -268,6 +268,7 @@ export function Suppliers({ state, catalog, lang, now, purchaseRequest, onPurcha
 
       <div className="panel supplier-ledger" hidden={profileTab !== 'purchases'}>
         <div className="panel-heading"><div className="section-title"><Icon name="expenses" size={16}/><h2>{t('purchases')}</h2><span className="count-badge">{account.purchases.length}</span></div></div>
+        {account.purchases.length > 0 && <div className="supplier-ledger-columns"><span>{t('ledgerDescription')}</span><span>{t('ledgerStatus')}</span><span>{t('ledgerTransaction')}</span></div>}
         {account.purchases.length ? [...account.purchases].sort((a,b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)).map(purchaseDetail) : <div className="empty-state supplier-empty"><p>{t('noHistory')}</p></div>}
       </div>
 
@@ -327,6 +328,7 @@ export function Suppliers({ state, catalog, lang, now, purchaseRequest, onPurcha
             </div>
           </search>
         </div>
+        {filteredPurchases.length > 0 && <div className="supplier-ledger-columns"><span>{t('ledgerDescription')}</span><span>{t('ledgerStatus')}</span><span>{t('ledgerTransaction')}</span></div>}
         {filteredPurchases.length ? filteredPurchases.map(purchaseDetail) : <div className="empty-state supplier-empty"><Icon name={knownPurchases.length ? 'search' : 'expenses'} size={25}/><p>{t(!knownPurchases.length ? 'noPurchases' : 'noMatch')}</p></div>}
       </div>
 
@@ -354,6 +356,7 @@ export function Suppliers({ state, catalog, lang, now, purchaseRequest, onPurcha
 
       {unknown.length > 0 && <div className="panel supplier-ledger supplier-review-ledger" hidden={activeMainTab !== 'review'}>
         <div className="panel-heading"><div className="section-title"><Icon name="clock" size={16}/><h2>{t('legacy')}</h2><span className="count-badge">{unknown.length}</span></div></div>
+        <div className="supplier-ledger-columns"><span>{t('ledgerDescription')}</span><span>{t('ledgerStatus')}</span><span>{t('ledgerTransaction')}</span></div>
         {unknown.slice().sort((a,b) => Date.parse(b.createdAt)-Date.parse(a.createdAt)).map(purchaseDetail)}
       </div>}
     </>}

@@ -195,7 +195,12 @@
   .purchases-filter .supplier-list-search{width:100%;flex-basis:100%}
   .purchases-tabs{overflow-x:auto;width:100%;padding-bottom:2px}
 }
+.supplier-ledger-columns{display:grid;grid-template-columns:16px minmax(0,1fr) auto minmax(120px,auto);align-items:center;gap:12px 16px;padding:12px var(--panel-inset,18px);border-bottom:1px solid var(--line);background:var(--surface-inset);color:var(--tiny-text-contrast,var(--text-secondary));font:600 12px/18px var(--sans);text-transform:uppercase}
+.supplier-ledger-columns span:first-child{grid-column:2}
+.supplier-ledger-columns span:nth-child(2){grid-column:3;text-align:right}
+.supplier-ledger-columns span:last-child{grid-column:4;text-align:right}
 .supplier-bill summary{display:grid;grid-template-columns:16px minmax(0,1fr) auto minmax(120px,auto);align-items:center;gap:12px 16px;min-height:var(--row-height,60px);padding:12px 18px;list-style:none;transition:background var(--motion-fast) var(--motion-ease)}
+@media(min-width:901px){.supplier-ledger-columns span:nth-child(2),.supplier-ledger-columns span:last-child,.supplier-bill-statuses,.supplier-bill-pricing{padding-inline:10px}}
 .supplier-bill summary::-webkit-details-marker{display:none}
 .supplier-bill summary:focus-visible{outline-offset:-3px}
 .supplier-bill summary:hover{background:var(--surface-hover)}
@@ -220,7 +225,7 @@
 .supplier-bill-amount small.supplier-balance-due{color:var(--warning)}
 .supplier-bill-amount small.supplier-balance-paid{color:var(--success)}
 .supplier-bill-voided .supplier-bill-description strong,.supplier-bill-voided .supplier-bill-amount strong{color:var(--text-secondary)}
-.supplier-bill-content{padding:0 18px 16px 46px;border-top:1px solid var(--line)}
+.supplier-bill-content{padding:0 46px 16px;border-top:1px solid var(--line)}
 .supplier-bill-content>.data-table-wrap{margin-top:14px;border:1px solid var(--line);background:var(--white)}
 .supplier-bill-content .data-table{min-width:460px;width:100%;border-collapse:collapse}
 .supplier-bill-content .data-table th{background:var(--surface-inset);color:var(--text-secondary);font:9px var(--mono);text-transform:uppercase;letter-spacing:0.05em;padding:9px 14px;border-bottom:1px solid var(--line)}
@@ -256,6 +261,7 @@
 .supplier-empty{min-height:140px;padding:24px;gap:10px}
 .supplier-empty p{font-size:12px;max-width:340px}
 @media(max-width:900px){
+  .supplier-ledger-columns{display:none}
   .supplier-bill summary{grid-template-columns:16px minmax(0,1fr) auto;gap:6px 12px}
   .supplier-bill-statuses{grid-column:2;grid-row:2;justify-content:flex-start}
   .supplier-bill-pricing{grid-column:3;grid-row:1 / span 2;align-self:center}
