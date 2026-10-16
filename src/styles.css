@@ -1,4 +1,4 @@
-:root{font-family:var(--font-sans);color:#22231f;background:#e9e7de;font-synthesis:none;font-weight:450;--paper:#e9e7de;--white:#fcfcfa;--ink:#22231f;--muted:#8b8d83;--line:#e5e6de;--accent:#00853E;--font-display:'Plus Jakarta Sans Variable','Hind Siliguri',sans-serif;--font-sans:'Inter Variable','Hind Siliguri',sans-serif;--font-mono:'JetBrains Mono Variable','Hind Siliguri',monospace;--mono:var(--font-mono);--sans:var(--font-sans);-webkit-font-smoothing:antialiased;font-feature-settings:"cv02" 1,"cv03" 1,"cv04" 1;font-size:14px}
+:root{font-family:var(--font-sans);color:#22231f;background:#e9e7de;font-synthesis:none;font-weight:450;--paper:#e9e7de;--white:#fcfcfa;--ink:#22231f;--muted:#8b8d83;--line:#e5e6de;--accent:#00853E;--font-display:'Plus Jakarta Sans Variable','Hind Siliguri',sans-serif;--font-sans:'Inter Variable','Hind Siliguri',sans-serif;--font-mono:'JetBrains Mono Variable','Hind Siliguri',monospace;--mono:var(--font-mono);--sans:var(--font-sans);-webkit-font-smoothing:antialiased;font-feature-settings:"cv02" 1,"cv03" 1,"cv04" 1;font-size:14.7px}
 :root{--accent-bright:var(--accent);--accent-soft:#eaf6ec;--accent-border:#cce8d5;--ease-out-snappy:cubic-bezier(.16,1,.3,1);--ease-in-out-crisp:cubic-bezier(.4,0,.2,1);--dur-instant:100ms;--dur-fast:160ms;--dur-normal:220ms;--motion-ease:var(--ease-out-snappy);--motion-fast:var(--dur-instant);--motion-standard:var(--dur-fast)}
 *{box-sizing:border-box}html,body{margin:0;overflow-x:hidden;max-width:100vw}button,input,select{font:inherit}button{cursor:pointer;color:inherit}button:disabled{cursor:not-allowed;opacity:.42}button{background:none;border:0;padding:0}input{color:var(--ink);min-width:0}button,input{touch-action:manipulation}button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}input:focus-visible{outline:none}::selection{background:#d8f0df}h1,h2,h3,h4,p{margin:0}svg{flex-shrink:0}kbd{font-family:var(--mono);font-size:10px;font-weight:500;line-height:1;display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;border:1px solid #dfe0d7;border-bottom-width:2px;border-radius:3px;padding:0 5px;background:#fafaf7;color:#74776b}code{font-family:var(--mono);font-size:11px}a{color:var(--accent)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .lang-bn{font-family:var(--font-sans)}
@@ -849,6 +849,12 @@
 .dialog-customer .search-clear-btn { display: grid; place-items: center; width: 24px; height: 24px; color: var(--muted); }
 .dialog-customer .search-clear-btn:hover { color: var(--ink); }
 .customer-segmented-strip { display: flex; gap: 20px; margin-top: 18px; border-bottom: 1px solid var(--line); }
+
+.main-content .inventory-table :is(th, td):nth-child(7) { text-align: center; }
+
+@media screen {
+  .app-shell .inventory-table .row-actions > button { font-size: 9.45px; }
+}
 .customer-segment-btn {
   display: inline-flex;
   align-items: center;
@@ -3032,7 +3038,7 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
   box-shadow:var(--shadow-card);
 }
 .modal,.modal.dialog-profile{box-shadow:var(--shadow-overlay)}
-.toast,.report-export-options{box-shadow:var(--shadow-floating)}
+.toast{box-shadow:var(--shadow-floating)}
 .topbar{box-shadow:var(--shadow-card)}
 .brand-mark{box-shadow:0 1px 3px rgba(34,35,31,.07)}
 .main-content .catalog-panel .product-row.selected{box-shadow:var(--shadow-card)}
@@ -3133,7 +3139,7 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 /* Stable control surfaces with brief color feedback. */
 :is(.primary-button,.secondary-button,.payment-button,.add-button,.provision-trigger,
   .purchase-history-trigger,.customer-history-download,.customer-create-button-footer,
-  .theme-toggle-btn,.report-export-buttons,.stock-row-button,
+  .theme-toggle-btn,.stock-row-button,
   .tx-action-bar button,.payment-methods>button,.category-tabs>button,
   .setting-language button,.add-variant-btn,
   .variant-builder-row .remove-variant-btn,.report-pagination button,
@@ -3144,7 +3150,7 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 }
 :is(.primary-button,.secondary-button,.payment-button,.add-button,.provision-trigger,
   .purchase-history-trigger,.customer-history-download,.customer-create-button-footer,
-  .theme-toggle-btn,.report-export-buttons,.stock-row-button,
+  .theme-toggle-btn,.stock-row-button,
   .tx-action-bar button,.payment-methods>button,.category-tabs>button,
   .setting-language button,.add-variant-btn,
   .variant-builder-row .remove-variant-btn,.report-pagination button,
@@ -3161,7 +3167,7 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 }
 :is(.primary-button,.secondary-button,.payment-button,.add-button,.provision-trigger,
   .purchase-history-trigger,.customer-history-download,.customer-create-button-footer,
-  .theme-toggle-btn,.report-export-buttons,.stock-row-button,
+  .theme-toggle-btn,.stock-row-button,
   .tx-action-bar button,.payment-methods>button,.category-tabs>button,
   .setting-language button,.add-variant-btn,
   .variant-builder-row .remove-variant-btn,.report-pagination button,
@@ -3172,7 +3178,7 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 }
 :is(.primary-button,.secondary-button,.payment-button,.add-button,.provision-trigger,
   .purchase-history-trigger,.customer-history-download,.customer-create-button-footer,
-  .theme-toggle-btn,.report-export-buttons,.adjust-row-button,.stock-row-button,
+  .theme-toggle-btn,.adjust-row-button,.stock-row-button,
   .archive-item-button,.tx-action-bar button,.payment-methods>button,.category-tabs>button,
   .setting-language button,.add-variant-btn,
   .variant-builder-row .remove-variant-btn,.report-pagination button,

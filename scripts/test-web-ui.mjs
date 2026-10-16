@@ -207,8 +207,6 @@ try {
 
   await click('.side-nav button[aria-label="Reports"]'); await waitFor('!!document.querySelector(".report-navigation")')
   assert.equal(await evaluate('document.title'), 'Reports | Hisab')
-  await click('.report-export:not(.report-export-toggle)')
-  await wait(async () => (await readdir(artifactDirectory)).some(file => file.endsWith('.xlsx')), 'spreadsheet download')
   await click('.report-period-summary'); await waitFor('!!document.querySelector(".report-period-editor:modal")')
   await key('Escape'); await waitFor('!document.querySelector("dialog[open]")')
   await click('.report-top-items button'); await waitFor('!!document.querySelector(".dialog-itemStats")')
@@ -218,7 +216,7 @@ try {
   await waitFor('document.querySelectorAll("dialog:modal").length === 2')
   await key('Escape'); await waitFor('document.querySelectorAll("dialog:modal").length === 1')
   await key('Escape'); await waitFor('!document.querySelector("dialog[open]")')
-  console.log('PASS: lazy Reports, spreadsheet export, and nested native dialogs')
+  console.log('PASS: lazy Reports and nested native dialogs')
 
   await click('.side-nav button[aria-label="Suppliers"]'); await waitFor('!!document.querySelector(".purchases-tabs")')
   assert.equal(await evaluate('document.querySelector(".purchases-tabs").getAttribute("role")'), 'group')

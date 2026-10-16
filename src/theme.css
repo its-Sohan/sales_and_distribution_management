@@ -7,7 +7,7 @@
   --surface-input: #fcfcfa;
   --surface-hover: #eef1e8;
   --table-row-alt: #f3f4ee;
-  --text-secondary: #62665c;
+  --text-secondary: #5d6157;
   --muted: var(--text-secondary);
   --tiny-text-contrast: var(--text-secondary);
   --accent-ink: #006c35;
@@ -36,7 +36,7 @@
   --surface-input: #1e1e20;
   --surface-hover: #2d2d30;
   --table-row-alt: #2d2d30;
-  --text-secondary: #b9b9bf;
+  --text-secondary: #c1c1c6;
   --accent-ink: #78d99e;
   --accent-hover: #006a33;
   --accent-selected: #204c32;
@@ -173,7 +173,7 @@
   :root .app-shell :is(.change-row.due, .tx-badge.sale_due, .tx-badge.negative, .void-badge) {
     background: var(--danger-soft); color: var(--danger); border-color: var(--danger-border);
   }
-  :root .app-shell :is(.due-amount, .field-error, .report-export-error, .report-loss,
+  :root .app-shell :is(.due-amount, .field-error, .report-loss,
     .customer-stat-card.due strong, .variant-builder-row .remove-variant-btn, .backend-recovery) { color: var(--danger); }
   :root .app-shell .variant-builder-row .remove-variant-btn:hover:not(:disabled) { background: var(--danger-soft); }
   :root .app-shell .connection { color: var(--success); }
@@ -185,6 +185,7 @@
   :root .app-shell .modal-close { background: var(--surface-inset); color: var(--text-secondary); border-color: var(--line); }
   :root .app-shell .modal-close:hover:not(:disabled):not(.active) { background: var(--surface-hover); color: var(--ink); }
   :root .app-shell :is(.clear-button, .discount-button, .bill-qty, .modal-close):hover:not(:disabled) { transform: none; }
+  :root .app-shell .archive-item-button { color: var(--text-secondary); }
 }
 
 /* Suppress inherited control transitions for the two frames that commit a palette switch. */

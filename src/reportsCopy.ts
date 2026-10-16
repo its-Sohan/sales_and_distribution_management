@@ -29,12 +29,8 @@ const en = {
   received: 'Total', status: 'Payment', showAll: 'Clear filters', noMatches: 'No matching records', noMatchesHint: 'Try another search or clear the filters.',
   results: 'results', of: 'of', previousPage: 'Previous page', nextPage: 'Next page', page: 'Page',
   filteredSales: 'Sales in these results', filteredProfit: 'Profit in these results', emptyHint: 'Choose a wider period or record a sale at the counter.',
-  source: 'All recorded receipts', scopeNote: 'Summary covers the selected period. Table filters apply to results and downloads.',
-  downloadExcel: 'Download', downloading: 'Preparing…', moreDownloadOptions: 'More download options', exportError: 'Download failed. Please try again.',
-  spreadsheetOverview: 'Daily summary', spreadsheetBills: 'Bills', spreadsheetItems: 'Item sales',
-  overviewExportScope: 'Daily totals for the selected period. Amounts are in BDT.',
-  filteredExportScope: 'All matching records for the selected period and filters, across every page. Amounts are in BDT.',
-  viewAll: 'View all items', exportOverview: 'Export daily summary', exportBills: 'Export matching bills', exportItems: 'Export matching items',
+  source: 'All recorded receipts', scopeNote: 'Summary covers the selected period. Table filters apply to results.',
+  viewAll: 'View all items',
   profitBasis: 'Bill discounts are shared across items by sales value. Historical buy prices are used.',
 }
 
@@ -67,12 +63,8 @@ const bn: Record<keyof typeof en, string> = {
   received: 'আদায়', status: 'পেমেন্ট', showAll: 'ফিল্টার মুছুন', noMatches: 'কোনো মিল পাওয়া যায়নি', noMatchesHint: 'অন্য নাম দিয়ে খুঁজুন বা ফিল্টার মুছুন।',
   results: 'টি ফলাফল', of: '/', previousPage: 'আগের পৃষ্ঠা', nextPage: 'পরের পৃষ্ঠা', page: 'পৃষ্ঠা',
   filteredSales: 'এই ফলাফলে বিক্রি', filteredProfit: 'এই ফলাফলে লাভ', emptyHint: 'বড় সময়সীমা বাছুন অথবা কাউন্টারে একটি বিক্রি লিখুন।',
-  source: 'সকল সংরক্ষিত বিল', scopeNote: 'সারসংক্ষেপ পুরো সময়সীমার। টেবিলের ফিল্টার ফলাফল ও ডাউনলোডে প্রযোজ্য।',
-  downloadExcel: 'ডাউনলোড', downloading: 'তৈরি হচ্ছে…', moreDownloadOptions: 'ডাউনলোডের আরও অপশন', exportError: 'ডাউনলোড হয়নি। আবার চেষ্টা করুন।',
-  spreadsheetOverview: 'দৈনিক হিসাব', spreadsheetBills: 'বিল', spreadsheetItems: 'পণ্যের বিক্রি',
-  overviewExportScope: 'বাছাই করা সময়সীমার দৈনিক হিসাব। টাকার পরিমাণ বাংলাদেশি টাকায়।',
-  filteredExportScope: 'বাছাই করা সময়সীমা ও ফিল্টারে মিলে যাওয়া সব পৃষ্ঠার তথ্য। টাকার পরিমাণ বাংলাদেশি টাকায়।',
-  viewAll: 'সব পণ্য দেখুন', exportOverview: 'দৈনিক হিসাব ডাউনলোড', exportBills: 'মিলে যাওয়া বিল ডাউনলোড', exportItems: 'মিলে যাওয়া পণ্য ডাউনলোড',
+  source: 'সকল সংরক্ষিত বিল', scopeNote: 'সারসংক্ষেপ পুরো সময়সীমার। টেবিলের ফিল্টার ফলাফলে প্রযোজ্য।',
+  viewAll: 'সব পণ্য দেখুন',
   profitBasis: 'বিক্রির অনুপাতে পণ্যে বিলের ছাড় ভাগ করা হয়েছে। বিক্রির সময়ের কেনা দাম ব্যবহার করা হয়েছে।',
 }
 

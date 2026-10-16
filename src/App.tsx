@@ -1726,7 +1726,6 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
           <div className="form-group span-2">
             <label htmlFor="item-warranty">{t('warranty')}</label>
             <input id="item-warranty" className="form-input" value={newWarranty} onChange={e => setNewWarranty(e.target.value)} maxLength={100} placeholder={t('warrantyPlaceholder')}/>
-            <small>{t('warrantyHint')}</small>
           </div>
           <div className="form-group span-2">
             <label htmlFor="item-unit">{t('unitLabel')}</label>

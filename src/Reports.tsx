@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Icon, ProductArt } from './Icons'
-import { purchaseAccount, purchaseCashEntries, supplierOutstandingDue, invoiceReceivingStatus, type StockReceiving, type SupplierPayment, type PurchaseSettlement, cleanSearchText, dhakaDateKey, filterByWindow, filterReceiptsByWindow, money, quantityWithUnit, receiptOutstandingDue, receiptProfit, reportRange, reportWindowMode, type AccountTransaction, type Expense, type Lang, type Product, type Purchase, type Receipt, type ReportWindow, type Return } from './model'
+import { purchaseAccount, purchaseCashEntries, supplierOutstandingDue, invoiceReceivingStatus, type StockReceiving, type SupplierPayment, type PurchaseSettlement, cleanSearchText, dhakaDateKey, filterByWindow, filterReceiptsByWindow, money, quantityWithUnit, receiptOutstandingDue, reportRange, reportWindowMode, type AccountTransaction, type Expense, type Lang, type Product, type Purchase, type Receipt, type ReportWindow, type Return } from './model'
 import { suppliersTranslator } from './suppliersCopy'
 import { translator } from './i18n'
 import { reportsTranslator } from './reportsCopy'
-import { csvText, expenseSummary, filterReportBills, itemPerformance, netReportSummary, netSalesBuckets, overviewExportRows, purchaseSummary, reportBillAccountingReady, reportSummary, returnSummary, salesShare } from './reportsModel'
+import { expenseSummary, filterReportBills, itemPerformance, netReportSummary, netSalesBuckets, purchaseSummary, reportBillAccountingReady, reportSummary, returnSummary, salesShare } from './reportsModel'
 import './reports.css'
-import { createReportSpreadsheet, dhakaSpreadsheetDate, downloadReport, type ExportCell } from './reportSpreadsheet'
 import { ReportWindowControl } from './ReportWindowControl'
+import { useReportMotion } from './useReportMotion'
 import { formatUiDate } from './dateFormat'
 
 type Props = {
@@ -37,32 +37,14 @@ export function Reports({ receipts, catalog, lang, now, window, purchases, expen
   const [category, setCategory] = useState('all')
   const [page, setPage] = useState(0)
   const [selectedBucket, setSelectedBucket] = useState<number | null>(null)
-  const [exportMenuOpen, setExportMenuOpen] = useState(false)
-  const [exporting, setExporting] = useState(false)
-  const [exportError, setExportError] = useState(false)
-  const exportControl = useRef<HTMLDivElement>(null)
-  const exportToggle = useRef<HTMLButtonElement>(null)
-  useEffect(() => {
-    if (!exportMenuOpen) return
-    const closeOutside = (event: PointerEvent) => {
-      if (!exportControl.current?.contains(event.target as Node)) setExportMenuOpen(false)
-    }
-    const closeEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') { setExportMenuOpen(false); exportToggle.current?.focus() }
-    }
-    document.addEventListener('pointerdown', closeOutside)
-    document.addEventListener('keydown', closeEscape)
-    return () => {
-      document.removeEventListener('pointerdown', closeOutside)
-      document.removeEventListener('keydown', closeEscape)
-    }
-  }, [exportMenuOpen])
+  const motionRoot = useRef<HTMLElement>(null)
+  const motionKey = typeof window === 'string' ? window : JSON.stringify(window)
+  useReportMotion(motionRoot, motionKey)
   const locale = lang === 'bn' ? 'bn-BD' : 'en-GB'
   const date = (time: number | string) => formatUiDate(time)
   const time = (value: number | string) => new Date(value).toLocaleTimeString('en-GB', { timeZone: 'Asia/Dhaka', hour: '2-digit', minute: '2-digit', hour12: false })
   const range = reportRange(window, now)
   const mode = reportWindowMode(window)
-  const periodKey = typeof window === 'string' ? window : window.mode
   const setPeriod = (next: ReportWindow) => { onWindow(next); setPage(0); setSelectedBucket(null) }
   const period = filterReceiptsByWindow(receipts, window, now)
   const summary = reportSummary(period)
@@ -128,62 +110,14 @@ export function Reports({ receipts, catalog, lang, now, window, purchases, expen
   const resetFilters = () => { setQuery(''); setMethod('all'); setStatus('all'); setCategory('all'); setItemScope('sold'); setPage(0) }
   const switchTab = (next: Tab) => { setActiveTab(next); setQuery(''); setPage(0) }
   const showDue = () => { switchTab('bills'); setMethod('all'); setStatus(periodDueKnown ? 'due' : 'all') }
-  const exportRows = (excel: boolean): ExportCell[][] => {
-    let rows: ExportCell[][]
-    if (activeTab === 'bills') rows = [['Bill', 'Date (Dhaka)', 'Customer', 'Items', 'Method', 'Subtotal (BDT)', 'Discount (BDT)', 'Total sales (BDT)', 'Gross profit (BDT)', 'Collected at checkout (BDT)', 'Due at checkout (BDT)'],
-      ...bills.map(r => [number(r.number), excel ? dhakaSpreadsheetDate(r.createdAt) : `${date(r.createdAt)} ${time(r.createdAt)}`, r.customer?.[lang] ?? t('walkIn'), r.lines.map(line => `${line.product.en} (${quantityWithUnit(line.quantity, line.product.unit)})`).join('; '), excel ? t(r.method) : r.method, r.subtotal, r.discount, r.total, reportSummary([r]).accountingIssue ? '' : receiptProfit(r), r.paid, r.due])]
-    else if (activeTab === 'items') rows = [['Item', 'Codes', 'Quantity sold', 'Bills', 'Discount (BDT)', 'Total sales (BDT)', 'Gross profit (BDT)', 'Margin (%)'],
-      ...items.map(item => [item.product.en, item.variants.map(p => p.code).join('; '), item.quantitiesKnown ? item.quantities.map(q => quantityWithUnit(q.quantity, q.unit)).join('; ') || '0' : '', item.count, item.amountsKnown ? item.discount : '', item.amountsKnown ? item.revenue : '', item.costKnown ? item.profit : '', item.costKnown && item.revenue > 0 ? Number(item.margin.toFixed(2)) : ''])]
-    else {
-      const daily = netSalesBuckets(period, periodReturns, periodExpenses, window, now, true, receipts)
-      const base = overviewExportRows(daily, start => excel ? dhakaSpreadsheetDate(start) : date(start))
-      rows = base.map((row, index) => index === 0 ? [...row, 'Purchase value (BDT)', 'Purchase payments (BDT)', 'Supplier refunds (BDT)', 'Stock received (BDT)'] : (() => {
-        const start = daily[index - 1].start, end = start + 86400000
-        const bills = purchases.filter(p => Date.parse(p.createdAt) >= start && Date.parse(p.createdAt) < end)
-        const cash = cashEntries.filter(p => Date.parse(p.createdAt) >= start && Date.parse(p.createdAt) < end)
-        const known = bills.every(p => purchaseAccount(p, supplierPayments, purchaseSettlements).known)
-        return [...row, purchaseSummary(bills).total, known ? cash.filter(p => p.type === 'payment').reduce((s,p) => s + p.amount, 0) : '', cash.filter(p => p.type === 'refund').reduce((s,p) => s + p.amount, 0), stockEvents.filter(p=>Date.parse(p.createdAt)>=start&&Date.parse(p.createdAt)<end).reduce((s,p)=>s+p.total,0)]
-      })())
-    }
-    return rows
-  }
-  const download = async (format: 'xlsx' | 'csv') => {
-    if (exporting) return
-    setExportMenuOpen(false)
-    setExportError(false)
-    setExporting(true)
-    try {
-      const blob = format === 'csv'
-        ? new Blob([csvText(exportRows(false) as (string | number)[][])], { type: 'text/csv;charset=utf-8;' })
-        : await createReportSpreadsheet({
-          rows: exportRows(true), tab: activeTab, lang,
-          generatedAt: now,
-          title: rt(activeTab === 'overview' ? 'spreadsheetOverview' : activeTab === 'bills' ? 'spreadsheetBills' : 'spreadsheetItems'),
-          period: `${date(range.start)} — ${date(range.end - 1)} (${rt('dhakaTime')})`,
-          scope: [rt(activeTab === 'overview' ? 'overviewExportScope' : 'filteredExportScope'), financial.estimatedCost ? rt('estimateHint') : '', financial.unassignedServiceCost ? rt('serviceCostHint') : '', financial.unverifiedCost ? rt('unverifiedCostHint') : ''].filter(Boolean).join(' '),
-        })
-      downloadReport(blob, `hisab-${activeTab}-${periodKey}-${dhakaSpreadsheetDate(range.start).toISOString().slice(0, 10)}.${format}`)
-    } catch {
-      setExportError(true)
-    } finally {
-      setExporting(false)
-    }
-  }
   const bucketLabel = (start: number) => mode === 'day' ? time(start) : date(start)
   const empty = <div className="empty-state report-empty"><Icon name={hasFilters ? 'search' : 'reports'} size={28}/><h3>{hasFilters ? rt('noMatches') : t('noSales')}</h3><p>{hasFilters ? rt('noMatchesHint') : rt('emptyHint')}</p><button className="text-button" onClick={hasFilters ? resetFilters : onCounter}>{hasFilters ? rt('showAll') : t('sales')}<Icon name="arrow" size={14}/></button></div>
 
-  return <section className="secondary-view reports-view" aria-label={t('reports')}>
+  return <section className="secondary-view reports-view" aria-label={t('reports')} ref={motionRoot}>
     <div className="report-toolbar">
       <div className="report-period"><span className="eyebrow">{rt('periodSummary')}</span><strong>{date(range.start)}{range.days > 1 && ` — ${date(range.end - 1)}`}</strong></div>
-      <div className="report-toolbar-actions"><ReportWindowControl window={window} onWindow={setPeriod} now={now} lang={lang} idPrefix="report" /><div className="report-export-control" ref={exportControl} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setExportMenuOpen(false) }}>
-        <div className="report-export-buttons">
-          <button className="report-export" disabled={exporting || (activeTab === "overview" ? !period.length && !periodReturns.length && !periodExpenses.length && !periodPurchases.length && !periodCash.length && !periodStock.length : !count)} onClick={() => void download("xlsx")} title={rt(activeTab === "overview" ? "exportOverview" : activeTab === "bills" ? "exportBills" : "exportItems")} aria-busy={exporting}><Icon name="download" size={15}/>{rt(exporting ? "downloading" : "downloadExcel")}</button>
-          <button className="report-export report-export-toggle" ref={exportToggle} disabled={exporting || (activeTab === "overview" ? !period.length && !periodReturns.length && !periodExpenses.length && !periodPurchases.length && !periodCash.length && !periodStock.length : !count)} aria-label={rt("moreDownloadOptions")} aria-expanded={exportMenuOpen} aria-controls="report-download-options" onClick={() => setExportMenuOpen(open => !open)}><Icon name="chevron" size={13}/></button>
-        </div>
-        {exportMenuOpen && <div id="report-download-options" className="report-export-options"><button onClick={() => { exportToggle.current?.focus(); void download("csv") }}><Icon name="download" size={14}/>{t("exportCsv")}</button></div>}
-      </div></div>
+      <div className="report-toolbar-actions"><ReportWindowControl window={window} onWindow={setPeriod} now={now} lang={lang} idPrefix="report" /></div>
     </div>
-    {exportError && <p className="report-export-error" role="alert">{rt("exportError")}</p>}
     <div className="metrics-grid report-metrics">
       <div className="metric-card"><div><span className="eyebrow">{rt('netSales')}</span><Icon name="reports" size={16}/></div><strong>{financial.salesKnown ? amount(netSales) : '—'}</strong><p>{summary.count} {billWord(summary.count)}<span>·</span>{rt('averageBill')} {amount(summary.average)}</p><small className="report-comparison">{change === null ? rt('noPrevious') : `${change > 0 ? '+' : ''}${change.toFixed(1)}% ${rt('previous')} ${range.days} ${rt('days')}`}</small></div>
       <div className="metric-card"><div><span className="eyebrow">{rt('grossProfit')}</span><Icon name="cash" size={16}/></div><strong className={grossProfit < 0 ? 'report-loss' : ''}>{financial.accountingIssue ? '—' : amount(grossProfit)}</strong><p>{financial.unassignedServiceCost || financial.unverifiedCost ? '—' : `${financial.margin.toFixed(1)}% ${rt('margin')}`}</p><small>{rt('profitHint')}</small></div>

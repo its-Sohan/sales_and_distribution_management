@@ -29,8 +29,6 @@ try {
     ['tests/browserCleanup.test.ts', 'browserCleanup.test.mjs'],
     ['src/reportsModel.ts', 'reportsModel.mjs'],
     ['src/reportBrand.ts', 'reportBrand.mjs'],
-    ['src/reportSpreadsheet.ts', 'reportSpreadsheet.mjs'],
-    ['tests/reportSpreadsheet.test.ts', 'reportSpreadsheet.test.mjs'],
     ['src/receiptFormat.ts', 'receiptFormat.mjs'],
     ['worker/validate.ts', 'validate.mjs'],
     ['worker/recalc.ts', 'recalc.mjs'],
@@ -53,7 +51,6 @@ try {
       .replaceAll('./d1Support.ts', './d1Support.mjs')
       .replaceAll('../src/receiptFormat.ts', './receiptFormat.mjs')
       .replaceAll('../src/reportsModel.ts', './reportsModel.mjs')
-      .replaceAll('../src/reportSpreadsheet.ts', './reportSpreadsheet.mjs')
       .replaceAll('../src/supplierReport.ts', './supplierReport.mjs')
       .replaceAll('../src/purchaseReport.ts', './purchaseReport.mjs')
       .replaceAll("'./purchaseReport'", "'./purchaseReport.mjs'")
@@ -75,6 +72,6 @@ try {
     const { outputText } = ts.transpileModule(code, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext } })
     writeFileSync(join(directory, target), outputText)
   }
-  const result = spawnSync(process.execPath, ['--test', '--experimental-test-isolation=none', ...process.argv.slice(2), join(directory, 'model.test.mjs'), join(directory, 'supplierReport.test.mjs'), join(directory, 'purchaseReport.test.mjs'), join(directory, 'stockReport.test.mjs'), join(directory, 'reportsModel.test.mjs'), join(directory, 'reportSpreadsheet.test.mjs'), join(directory, 'receiptFormat.test.mjs'), join(directory, 'worker.test.mjs'), join(directory, 'backend.test.mjs'), join(directory, 'accountingIntegration.test.mjs'), join(directory, 'auth.test.mjs'), join(directory, 'browserCleanup.test.mjs'), new URL('../tests/accountingRepair.test.mjs', import.meta.url).pathname], { stdio: 'inherit' })
+  const result = spawnSync(process.execPath, ['--test', '--experimental-test-isolation=none', ...process.argv.slice(2), join(directory, 'model.test.mjs'), join(directory, 'supplierReport.test.mjs'), join(directory, 'purchaseReport.test.mjs'), join(directory, 'stockReport.test.mjs'), join(directory, 'reportsModel.test.mjs'), join(directory, 'receiptFormat.test.mjs'), join(directory, 'worker.test.mjs'), join(directory, 'backend.test.mjs'), join(directory, 'accountingIntegration.test.mjs'), join(directory, 'auth.test.mjs'), join(directory, 'browserCleanup.test.mjs'), new URL('../tests/accountingRepair.test.mjs', import.meta.url).pathname], { stdio: 'inherit' })
   process.exitCode = result.status ?? 1
 } finally { rmSync(directory, { recursive: true, force: true }) }

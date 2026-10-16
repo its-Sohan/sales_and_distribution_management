@@ -77,6 +77,7 @@ npm run build
 npm run db:migrate:local
 Then, whenever you want to test, start the backend in terminal 1:
 wrangler dev --port 8787
+
 Start the frontend in terminal 2:
 npm run dev
 
