@@ -19,14 +19,13 @@
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
     "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
     "@fontsource-variable/noto-sans-bengali": "^5.3.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
     "@fontsource-variable/space-grotesk": "^5.3.0",
     "@fontsource/hind-siliguri": "^5.3.0",
-    "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/ibm-plex-sans": "^5.3.0",
     "@fontsource/jetbrains-mono": "^5.3.0",
-    "@fontsource/merriweather-sans": "^5.3.0",
-    "@fontsource/plus-jakarta-sans": "^5.3.0",
     "exceljs": "^4.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

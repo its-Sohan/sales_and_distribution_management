@@ -38,19 +38,19 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Merriweather Sans', var(--sans);
-  font-size: 30px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
   letter-spacing: -.2px;
   color: var(--ink);
+  background: #F4F5F0;
+  border: 1px solid #E2E5DC;
+  padding: 5px 12px;
+  border-radius: 999px;
   white-space: nowrap;
 }
-.login-shop span { color: #00853E; }
-.login-shop strong { color: #ed151b; font-weight: 800; }
-:root[data-theme="dark"] .login-shop span,
-:root.dark .login-shop span { color: #78d99e; }
-:root[data-theme="dark"] .login-shop strong,
-:root.dark .login-shop strong { color: #ff777d; }
+:root[data-theme="dark"] .login-shop,
+:root.dark .login-shop { background: var(--surface-inset); border-color: var(--line); }
 .login-preferences { margin-left: auto; display: flex; align-items: center; gap: 22px; position: relative; z-index: 1; }
 .login-language { display: flex; align-items: center; gap: 9px; min-height: 44px; font-size: 12px; color: var(--text-secondary); }
 .login-language .selected { color: var(--ink); font-weight: 700; }
@@ -93,7 +93,7 @@
 
 .login-card { min-width: 0; border: 1px solid var(--login-line); background: var(--login-card); padding: 36px; border-radius: 5px; box-shadow: 0 1px 2px color-mix(in srgb, var(--ink) 8%, transparent), 0 12px 32px color-mix(in srgb, var(--ink) 12%, transparent); }
 :root:not(.dark):not([data-theme="dark"]) .login-card { box-shadow: 0 2px 6px rgba(30, 30, 26, .10), 0 18px 42px rgba(30, 30, 26, .16); }
-.login-card, .login-description, .login-footer { font-family: 'Plus Jakarta Sans', var(--sans); font-weight: 600; }
+.login-card, .login-description, .login-footer { font-family: var(--font-sans); font-weight: 600; }
 .login-card-top { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 28px; }
 .login-lock { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--login-line); border-radius: 50%; color: var(--accent-ink); }
 .login-lock svg { width: 18px; height: 18px; }
@@ -219,3 +219,7 @@
   .login-page * { transition: none; }
   .login-submit, .login-submit svg { translate: none !important; }
 }
+
+/* Typography roles: display titles, sans labels, mono feature indexes. */
+:is(.login-intro h2,.login-card h1,.login-brand .wordmark){font-family:var(--font-display)}
+:is(.login-eyebrow,.login-footer > span:first-child,.login-footer > span:last-child){font-family:var(--sans)}

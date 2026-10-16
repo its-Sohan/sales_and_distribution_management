@@ -1118,7 +1118,7 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
       <header className="topbar">
         <div className="wordmark">hisab<span>.</span></div>
         <span className="top-divider"/>
-        <div className="shop-name"><span>Mayer Dowa</span> <strong>Telecom &amp; IT</strong> <span>Accessories</span></div>
+        <div className="shop-name">Mayer Dowa Telecom &amp; IT Accessories</div>
         <div className="topbar-right">
           <span className={`connection ${!online || saveStatus === 'error' ? 'offline' : saveStatus === 'saving' ? 'saving' : ''}`} role="status"><i/>{t(!online ? 'offline' : saveStatus === 'error' ? 'connectionIssue' : saveStatus === 'saving' ? 'saving' : 'upToDate')}</span>
           <button
@@ -1176,7 +1176,7 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
             <div className="product-table-head"><span>{t('product')}</span><span>{t('referencePrice')}</span></div>
             <div className="product-list" aria-label={t('products')}>
               {filtered.map((p, index) => <button key={p.id} ref={el => { productRefs.current[index] = el }} className={`product-row ${selected === index ? 'selected' : ''} ${quantityProduct?.id === p.id ? 'entering' : ''}`} onClick={() => { setSelected(index); chooseProduct(p) }} onFocus={() => setSelected(index)} onKeyDown={e => { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); const next = Math.max(0, Math.min(filtered.length - 1, index + (e.key === 'ArrowDown' ? 1 : -1))); productRefs.current[next]?.focus() } }}>
-                <ProductArt product={p}/><div className="product-info"><strong>{p.en}</strong><span><code>{p.code}</code><i/> {lang === 'en' ? p.detail : p.detailBn}</span></div><div className="product-price"><strong>{p.price ? money(p.price) : '—'}</strong><span>{isMoneyUnit(p.unit) ? '৳ / ৳1' : `৳ / ${unitText(p.unit)}`}</span></div><span className="row-enter">↵</span>
+                <ProductArt product={p}/><div className="product-info"><strong>{p.en}</strong><span><code>{p.code}</code><i/> {lang === 'en' ? p.detail : p.detailBn}</span></div><div className="product-price"><strong>{p.price ? `৳ ${money(p.price)}` : '—'}</strong><span>{isMoneyUnit(p.unit) ? '/ ৳1' : `/ ${unitText(p.unit)}`}</span></div><span className="row-enter">↵</span>
               </button>)}
               {!filtered.length && <div className="empty-state"><Icon name="search" size={30}/><h3>{t('noResults')}</h3><p>{t('noResultsHint')}</p>{query || category !== 'all' ? <button className="text-button" onClick={() => { setQuery(''); setCategory('all'); goSearch() }}>{t('all')}<Icon name="arrow" size={14}/></button> : <button className="text-button" onClick={openProvisionDialog}>{t('provisionItem')}<Icon name="plus" size={14}/></button>}</div>}
             </div>

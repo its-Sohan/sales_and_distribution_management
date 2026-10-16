@@ -11,6 +11,10 @@ const assetHeaders = Object.fromEntries(readFileSync(new URL('./public/_headers'
 
 export default defineConfig({
   plugins: [react()],
+  // The production CSP allows font-src 'self' only. Keep every font as a
+  // same-origin file instead of letting Vite inline the small subset woff2
+  // files as data: URLs, which the browser blocks.
+  build: { assetsInlineLimit: 0 },
   preview: { headers: assetHeaders },
   server: {
     headers: {

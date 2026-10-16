@@ -114,3 +114,9 @@
   .stock-purchase-preview>div{font-size:12px;gap:8px}
   .stock-purchase-preview dd{font-size:12px}
 }
+
+/* Typography roles: money and quantities leave the monospace face. */
+:is(.bill-finder-amount,.stock-picker-quantity,.stock-purchase-preview dd){
+  font-family:var(--sans);
+  font-variant-numeric:tabular-nums;
+}

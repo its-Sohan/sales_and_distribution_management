@@ -67,7 +67,7 @@ export function Login({ lang, onLanguage, theme, onTheme, checking, unavailable,
     <header className="login-header">
       <a className="login-brand" href="/" aria-label="Hisab — Mayer Dowa Telecom &amp; IT Accessories"><PixelMark/><span className="wordmark">hisab<span>.</span></span></a>
       <span className="login-brand-divider"/>
-      <span className="login-shop"><span>Mayer Dowa</span> <strong>Telecom &amp; IT</strong> <span>Accessories</span></span>
+      <span className="login-shop">Mayer Dowa Telecom &amp; IT Accessories</span>
       <div className="login-preferences">
         <button className="login-language" type="button" onClick={() => onLanguage(lang === 'en' ? 'bn' : 'en')} aria-label={lang === 'en' ? 'Switch to Bangla' : 'Switch to English'}><span className={lang === 'en' ? 'selected' : ''}>EN</span><span aria-hidden="true">/</span><span className={lang === 'bn' ? 'selected' : ''}>বাং</span></button>
         <button className="login-theme" type="button" onClick={onTheme} aria-label={theme === 'dark' ? t.themeLight : t.themeDark}><Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18}/></button>

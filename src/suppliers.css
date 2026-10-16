@@ -309,3 +309,17 @@
 
 .supplier-bill .invoice-receiving-batch>summary{display:list-item;grid-template-columns:none;min-height:0;padding:0;list-style:revert}
 .supplier-bill .invoice-receiving-batch>summary::-webkit-details-marker{display:inline-block}
+
+/* Typography roles: supplier money and counts use sans with tabular figures;
+   labels and badges follow the sans face. */
+:is(.supplier-stats strong,.supplier-table td.numeric-cell,.supplier-target-due strong,
+  .supplier-bill-content .data-table td.numeric-cell,.supplier-bill-amount strong,
+  .supplier-bill-payment-summary dd,.supplier-payment-history li>strong,
+  .supplier-nav-count,.invoice-payment-summary dd,.receiving-entry-footer strong){
+  font-family:var(--sans);
+  font-variant-numeric:tabular-nums;
+}
+:is(.supplier-stats span,.supplier-avatar,.supplier-target-meta strong,
+  .supplier-bill-content .data-table th,.supplier-bill-amount small,
+  .supplier-payment-history h4,.supplier-status){font-family:var(--sans)}
+.supplier-bill-content .data-table th{font-weight:600;letter-spacing:.06em;text-transform:uppercase}

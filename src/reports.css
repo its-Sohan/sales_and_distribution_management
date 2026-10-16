@@ -289,3 +289,12 @@
 .report-chart-column.selected::before{background:color-mix(in srgb,var(--accent) 7%,transparent)}
 .report-top-items>button{transition:background-color var(--motion-standard) var(--motion-ease)}
 .report-pagination button{transition:background-color var(--motion-fast) var(--motion-ease),border-color var(--motion-fast) var(--motion-ease),color var(--motion-fast) var(--motion-ease)}
+
+/* Typography roles: report money and counts use sans with tabular figures. */
+:is(.report-chart-title>strong,.report-payment-method strong,.report-payment-total strong,
+  .report-reconciliation dd,.report-top-amount,.report-top-metric>strong,.report-bar-value,
+  .report-results-summary strong,.report-nav-count){
+  font-family:var(--sans);
+  font-variant-numeric:tabular-nums;
+}
+:is(.report-panel-meta,.report-pagination){font-family:var(--sans)}
