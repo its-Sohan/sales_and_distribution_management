@@ -29,7 +29,8 @@
 @media(prefers-reduced-motion:reduce){.supplier-bill[open]>:not(summary){animation:none}.supplier-bill::details-content{transition:none}}
 
 /* Use the same panel and ledger rhythm as customer accounts and reports. */
-.suppliers-view{gap:18px}
+.suppliers-view{gap:16px}
+.suppliers-view [hidden]{display:none!important}
 @media(min-width:681px){
   .main-content:has(>.suppliers-view){overflow-y:auto;scrollbar-width:thin}
   .main-content>.suppliers-view{flex:1 0 auto;overflow:visible}
@@ -37,34 +38,70 @@
 .supplier-toolbar{justify-content:flex-end;gap:8px}
 .supplier-toolbar .supplier-back{margin-right:auto}
 .supplier-actions button{display:inline-flex;align-items:center;justify-content:center;gap:7px}
-.main-content .supplier-overview{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:0;gap:18px}
-.supplier-overview .metric-card{min-width:0}
-.supplier-overview .metric-card>strong{font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
-.supplier-overview-note{display:block;margin-top:8px;font-size:11px;color:var(--text-secondary);line-height:1.5}
-.main-content .supplier-directory>.panel-heading{height:auto;min-height:64px;padding:12px 18px;flex-wrap:wrap;gap:12px}
+.main-content .supplier-overview{grid-template-columns:repeat(3,minmax(0,1fr));margin-bottom:0;gap:14px}
+.supplier-overview .metric-card{min-width:0;padding:18px 20px}
+.supplier-overview .metric-card>strong{margin-top:14px;font-size:25px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.supplier-overview-note{display:block;margin-top:6px;font-size:11px;color:var(--text-secondary);line-height:1.5}
+
+.supplier-navigation{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.supplier-navigation::-webkit-scrollbar{display:none}
+.supplier-navigation>button{display:inline-flex;align-items:center;gap:8px;padding:10px 18px 11px;border-bottom:2px solid transparent;margin-bottom:-1px;font-size:12px;color:var(--text-secondary);font-weight:500;min-height:42px;white-space:nowrap;transition:color var(--motion-fast) var(--motion-ease),border-color var(--motion-fast) var(--motion-ease)}
+.supplier-navigation>button:first-child{padding-left:0;padding-right:22px}
+.supplier-navigation>button:hover{color:var(--ink)}
+.supplier-navigation>button.active{color:var(--ink);border-bottom-color:var(--accent-ink);font-weight:600}
+.supplier-nav-count{font:9px var(--mono);background:var(--white);padding:2px 6px;border:1px solid var(--line);color:var(--text-secondary)}
+.supplier-navigation>button.active .supplier-nav-count{border-color:var(--accent-border);background:var(--accent-soft);color:var(--accent-ink)}
+.supplier-navigation>button.supplier-nav-warning .supplier-nav-count{background:var(--warning-soft);border-color:var(--warning-border);color:var(--warning)}
+.supplier-navigation>button.supplier-nav-warning.active{border-bottom-color:var(--warning)}
+.main-content :is(.supplier-ledger,.supplier-directory)>.panel-heading{height:auto;min-height:52px;padding:10px 18px;flex-wrap:wrap;gap:12px}
+.main-content :is(.supplier-ledger,.supplier-directory)>.panel-heading .section-title h2{font-size:14px;font-weight:600;letter-spacing:-.3px;white-space:nowrap}
 .supplier-directory .section-title>svg,.supplier-ledger .section-title>svg{color:var(--text-secondary)}
 .supplier-directory .supplier-filter{gap:14px;margin-left:auto;flex-wrap:nowrap}
-.supplier-directory .supplier-list-search{width:280px;min-width:180px}
-.supplier-directory .supplier-filter>.secondary-button{min-height:38px;padding:8px 12px;font-size:13px;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
-.supplier-list-search .form-input{width:100%;min-height:36px;font-size:12px}
-.supplier-archive-filter{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;cursor:pointer;color:var(--text-secondary)}
+.supplier-directory .supplier-list-search{width:260px;min-width:180px}
+.supplier-list-search .form-input{width:100%;min-height:36px;height:36px;font-size:12px}
+.supplier-archive-filter{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;cursor:pointer;color:var(--text-secondary);font-size:12px}
 .supplier-archive-filter input{width:14px;height:14px;margin:0;accent-color:var(--accent)}
+
+.supplier-directory>.data-table-wrap,.supplier-transaction-report>.data-table-wrap{container-type:inline-size;max-block-size:min(640px,72dvh);overflow:auto}
+.supplier-table thead,.supplier-report-table thead{position:sticky;inset-block-start:0;z-index:1}
+
 .supplier-table .supplier-identity{display:flex;align-items:center;gap:10px}
-.supplier-avatar{display:grid;place-items:center;width:32px;height:32px;flex-shrink:0;border:1px solid var(--line);background:var(--surface-inset);font-size:12px;font-weight:600;color:var(--text-secondary)}
-.supplier-name{font-weight:600;color:var(--ink);text-align:left;font-size:13px;min-height:32px}
+.supplier-avatar{display:grid;place-items:center;width:32px;height:32px;flex-shrink:0;border:1px solid var(--line);background:var(--surface-inset);font:600 12px var(--mono);color:var(--text-secondary)}
+.supplier-avatar-large{width:42px;height:42px;font-size:15px}
+.supplier-name{font-weight:600;color:var(--ink);text-align:left;font-size:var(--body-size,14px);min-height:28px}
 .supplier-name:hover{color:var(--accent-ink)}
-.supplier-identity small{display:block;color:var(--text-secondary);font-size:11px}
-.supplier-table td{color:var(--text-secondary)}
+.supplier-identity small{display:block;color:var(--text-secondary);font-size:var(--detail-size,11px)}
+.supplier-table td{color:var(--text-secondary);min-height:var(--row-height,60px)}
+.supplier-table td code{font:11px var(--mono);color:var(--text-secondary)}
+.supplier-table td.numeric-cell{font:500 13px var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
 .supplier-table td:last-child{width:32px;padding-left:0;color:var(--text-secondary)}
 .supplier-table th:nth-last-child(2),.supplier-table td:nth-last-child(2){text-align:right}
-.supplier-table .supplier-last-transaction{font-size:12px}
-.supplier-balance-due{color:var(--warning)}
-.supplier-balance-paid{color:var(--text-secondary)}
-.supplier-table-unconfirmed{display:block;margin-top:5px;font:10px var(--sans);color:var(--warning)}
-.main-content .supplier-ledger>.panel-heading{height:auto;min-height:56px;padding:12px 18px;flex-wrap:wrap;gap:12px}
+.supplier-table .supplier-last-transaction{font:11px var(--mono);color:var(--text-secondary)}
+.supplier-balance-due{color:var(--warning);font-weight:600}
+.supplier-balance-paid{color:var(--text-secondary);font-weight:400}
+.supplier-table-unconfirmed{display:block;margin-top:4px;font:10px var(--sans);color:var(--warning)}
+
+.supplier-profile{padding:18px 20px}
+.supplier-profile-head{display:flex;align-items:flex-start;gap:14px}
+.supplier-profile-identity{min-width:0;flex:1}
+.supplier-profile h2{font-size:20px;font-weight:600;letter-spacing:-0.02em;line-height:1.25;overflow-wrap:anywhere;color:var(--ink)}
+.supplier-profile-meta{margin:4px 0 0;font-size:12px;color:var(--text-secondary);line-height:1.5}
+.supplier-profile-note{margin:6px 0 0;font-size:12px;color:var(--ink);line-height:1.5}
+.supplier-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.supplier-stats>div{padding:12px 14px;background:var(--surface-inset);border:1px solid var(--card-border);display:flex;flex-direction:column;gap:6px}
+.supplier-stats span{font:9px var(--mono);text-transform:uppercase;letter-spacing:0.06em;color:var(--text-secondary)}
+.supplier-stats strong{font:500 20px var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
+
+.supplier-target-meta{margin:6px 0 4px;font-size:12px;color:var(--text-secondary)}
+.supplier-target-meta strong{color:var(--ink);font-family:var(--mono)}
+.supplier-target-due{margin:0 0 12px;font-size:12px;color:var(--text-secondary)}
+.supplier-target-due strong{font-family:var(--mono);color:var(--warning)}
+
+.main-content :is(.supplier-ledger,.supplier-directory)>.panel-heading{height:auto;min-height:52px;padding:10px 18px;flex-wrap:wrap;gap:12px}
+.main-content :is(.supplier-ledger,.supplier-directory)>.panel-heading .section-title h2{font-size:14px;font-weight:600;letter-spacing:-.3px;white-space:nowrap}
 .supplier-review-ledger>.panel-heading{background:var(--warning-soft)}
 .supplier-review-ledger .section-title>svg,.supplier-review-ledger .count-badge{color:var(--warning)}
-.supplier-ledger .section-title h2{white-space:normal;line-height:1.5}
+.supplier-ledger .section-title h2{white-space:normal;line-height:1.4}
 .supplier-ledger .supplier-bill{border:0;border-bottom:1px solid var(--line);background:transparent;padding:0}
 .supplier-ledger .supplier-bill:last-child{border-bottom:0}
 
@@ -147,7 +184,7 @@
 .receiving-entry-footer strong{font-family:var(--mono);font-weight:500}
 .receiving-entry-footer>button{flex-shrink:0;min-height:38px;padding:8px 0;font-size:12px}
 @media(max-width:420px){.receiving-entry-fields{grid-template-columns:minmax(0,1fr);gap:16px}.receiving-entry-footer{align-items:flex-start}}
-.purchases-filter{gap:12px;margin-left:auto;flex-wrap:wrap;align-items:center}
+.purchases-filter{gap:10px;margin-left:auto;flex-wrap:wrap;align-items:center}
 .purchases-filter .supplier-list-search{width:220px;min-width:160px}
 .purchases-tabs{padding:0;gap:4px;flex-wrap:wrap}
 
@@ -161,98 +198,93 @@
   .purchases-filter .supplier-list-search{width:100%;flex-basis:100%}
   .purchases-tabs{overflow-x:auto;width:100%;padding-bottom:2px}
 }
-.supplier-bill summary{display:grid;grid-template-columns:16px minmax(0,1fr) minmax(130px,auto) minmax(210px,auto);gap:14px;min-height:83px;padding:16px 18px;list-style:none;transition:background var(--motion-fast) var(--motion-ease)}
+.supplier-bill summary{display:grid;grid-template-columns:16px minmax(0,1fr) auto minmax(120px,auto);align-items:center;gap:12px 16px;min-height:var(--row-height,60px);padding:12px 18px;list-style:none;transition:background var(--motion-fast) var(--motion-ease)}
 .supplier-bill summary::-webkit-details-marker{display:none}
 .supplier-bill summary:focus-visible{outline-offset:-3px}
 .supplier-bill summary:hover{background:var(--surface-hover)}
+.supplier-bill[open]>summary{background:color-mix(in srgb,var(--accent) 4%,var(--white))}
+[data-theme="dark"] .supplier-bill[open]>summary,.dark .supplier-bill[open]>summary{background:var(--surface-inset)}
 .supplier-bill-chevron{display:flex;align-items:center;justify-content:center;color:var(--text-secondary)}
-.supplier-bill-chevron svg{transition:transform 180ms var(--motion-ease)}
-.supplier-bill[open] .supplier-bill-chevron svg{transform:rotate(90deg)}
-.supplier-bill-description strong{display:block;font-family:var(--space);font-size:13px;font-weight:600;line-height:1.5;color:var(--ink);letter-spacing:-0.01em}
-.supplier-bill small{font-size:11px;line-height:1.6;margin-top:4px}
-.supplier-bill-statuses{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
-.supplier-status{display:inline-flex;width:115px;box-sizing:border-box;align-items:center;justify-content:center;text-align:center;padding:3px 7px;font-size:10px;line-height:1.5;border:1px solid transparent;white-space:nowrap}
+.supplier-bill-chevron svg{transition:transform 160ms var(--motion-ease)}
+.supplier-bill[open] .supplier-bill-chevron svg{transform:rotate(90deg);color:var(--accent-ink)}
+.supplier-bill-description{min-width:0}
+.supplier-bill-description strong{display:block;font-family:var(--sans);font-size:var(--body-size,14px);font-weight:600;line-height:1.35;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.supplier-bill small{font-size:var(--detail-size,11px);line-height:1.45;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.supplier-bill-statuses{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px}
+.supplier-status{display:inline-flex;box-sizing:border-box;align-items:center;justify-content:center;text-align:center;padding:3px 8px;font:500 10px/1.4 var(--mono);border:1px solid transparent;white-space:nowrap}
 .supplier-status-neutral{background:var(--surface-inset);color:var(--text-secondary);border-color:var(--line)}
+.supplier-status-settled{background:var(--success-soft);color:var(--success);border-color:var(--success-border)}
 .supplier-status-pending{background:var(--warning-soft);color:var(--warning);border-color:var(--warning-border)}
 .supplier-status-voided{background:var(--danger-soft);color:var(--danger);border-color:var(--danger-border)}
 .supplier-bill-pricing{display:flex;align-items:center;justify-content:flex-end;gap:10px;text-align:right}
-.supplier-bill-amount{display:flex;flex-direction:column;align-items:flex-end;text-align:right;margin-left:-30px;}
-.supplier-bill-amount strong{font:500 14px var(--mono);color:var(--ink);white-space:nowrap}
-.supplier-bill-amount small{white-space:normal}
+.supplier-bill-amount{display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+.supplier-bill-amount strong{font:500 14px var(--mono);font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.supplier-bill-amount small{white-space:nowrap;margin-top:2px;font:10px var(--mono)}
 .supplier-bill-amount small.supplier-balance-due{color:var(--warning)}
 .supplier-bill-amount small.supplier-balance-paid{color:var(--success)}
-.supplier-bill-pdf-btn{display:inline-flex;align-items:center;gap:5px;height:30px;padding:0 9px;font-size:11px;font-weight:600;border-radius:0;border:1px solid var(--line);background:var(--surface);color:var(--text-secondary);cursor:pointer;white-space:nowrap;transition:all var(--motion-fast) var(--motion-ease);flex-shrink:0}
-.supplier-bill-pdf-btn:hover:not(:disabled){color:var(--primary);border-color:var(--primary);background:var(--primary-soft,rgba(16,185,129,0.08))}
-.supplier-bill-pdf-btn:disabled{opacity:0.6;cursor:not-allowed}
 .supplier-bill-voided .supplier-bill-description strong,.supplier-bill-voided .supplier-bill-amount strong{color:var(--text-secondary)}
-.supplier-bill-content{padding:0 18px 18px 48px;border-top:1px solid var(--line)}
+.supplier-bill-content{padding:0 18px 16px 46px;border-top:1px solid var(--line)}
 .supplier-bill-content>.data-table-wrap{margin-top:14px;border:1px solid var(--line);background:var(--white)}
 .supplier-bill-content .data-table{min-width:460px;width:100%;border-collapse:collapse}
-.supplier-bill-content .data-table th{background:var(--surface-inset);color:var(--ink);font-size:11px;font-weight:600;letter-spacing:0.04em;padding:10px 14px;border-bottom:1px solid var(--line)}
-.supplier-bill-content .data-table td{color:var(--ink);font-size:13px;padding:10px 14px;border-bottom:1px solid var(--line);line-height:1.5;height:auto}
+.supplier-bill-content .data-table th{background:var(--surface-inset);color:var(--text-secondary);font:9px var(--mono);text-transform:uppercase;letter-spacing:0.05em;padding:9px 14px;border-bottom:1px solid var(--line)}
+.supplier-bill-content .data-table td{color:var(--ink);font-size:13px;padding:9px 14px;border-bottom:1px solid var(--line);line-height:1.45;height:auto}
 .supplier-bill-content .data-table tbody tr:last-child td{border-bottom:none}
 .supplier-bill-content .data-table tbody tr:hover{background:var(--surface-hover)}
 .supplier-bill-product,
 .supplier-bill-content .data-table td.supplier-bill-product,
-.supplier-bill-content .data-table td:first-child{font-family:var(--space);font-weight:600;font-size:13.5px;color:var(--ink);letter-spacing:-0.01em}
-.supplier-bill-content .data-table td.numeric-cell{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;color:var(--ink);font-size:13.5px}
+.supplier-bill-content .data-table td:first-child{font-family:var(--sans);font-weight:550;font-size:13px;color:var(--ink)}
+.supplier-bill-content .data-table td.numeric-cell{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500;color:var(--ink);font-size:13px}
 .supplier-bill-content .data-table td:last-child{font-weight:600;color:var(--ink)}
 [data-theme="dark"] .supplier-bill-content .data-table th,
-.dark .supplier-bill-content .data-table th{background:var(--surface-inset);color:var(--ink);border-bottom-color:var(--line)}
+.dark .supplier-bill-content .data-table th{background:var(--surface-inset);color:var(--text-secondary);border-bottom-color:var(--line)}
 [data-theme="dark"] .supplier-bill-content .data-table td,
 .dark .supplier-bill-content .data-table td{color:var(--ink);border-bottom-color:var(--line)}
 [data-theme="dark"] .supplier-bill-content .data-table tbody tr:hover,
 .dark .supplier-bill-content .data-table tbody tr:hover{background:var(--surface-hover)}
-.supplier-bill-payment-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:14px 0 0;padding:12px 14px;background:var(--surface-inset)}
+.supplier-bill-payment-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0;padding:10px 14px;background:var(--surface-inset);border:1px solid var(--line)}
 .supplier-bill-payment-summary>div{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
 .supplier-bill-payment-summary dt{font-size:11px;color:var(--text-secondary)}
 .supplier-bill-payment-summary dd{margin:0;font:500 13px/1.5 var(--mono);text-align:right;color:var(--ink)}
 .supplier-bill-payment-summary .has-due dd{color:var(--warning)}
-.supplier-payment-history{margin-top:16px}
-.supplier-payment-history h4{margin:0 0 8px;font-size:12px;font-weight:600;color:var(--ink)}
+.supplier-payment-history{margin-top:14px}
+.supplier-payment-history h4{margin:0 0 6px;font:600 11px var(--mono);text-transform:uppercase;letter-spacing:0.04em;color:var(--text-secondary)}
 .supplier-payment-history ul{list-style:none;margin:0;padding:0}
-.supplier-payment-history li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(90px,auto);align-items:center;gap:8px 16px;padding:9px 0;border-top:1px solid var(--line);font-size:11px}
+.supplier-payment-history li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(90px,auto);align-items:center;gap:8px 16px;padding:8px 0;border-top:1px solid var(--line);font-size:11px}
 .supplier-payment-history li>div{display:flex;flex-wrap:wrap;gap:4px 12px;min-width:0;color:var(--text-secondary)}
-.supplier-payment-history time{font-variant-numeric:tabular-nums}
+.supplier-payment-history time{font-variant-numeric:tabular-nums;font-family:var(--mono)}
 .supplier-payment-history li>strong{font:500 12px/1.5 var(--mono);white-space:nowrap;color:var(--ink)}
 .supplier-payment-history li>span{text-align:right;color:var(--text-secondary);overflow-wrap:anywhere}
 .supplier-payment-history li small{display:block;margin-top:2px;color:var(--text-secondary)}
 .supplier-bill-content>.supplier-actions{margin-top:14px}
-.supplier-ledger .supplier-payment-event{padding:18px}
-.supplier-payment-event>strong{font-size:13px;color:var(--accent-ink)}
-.supplier-stats>div{background:var(--surface-inset);border-color:var(--card-border)}
-.supplier-stats strong{font-size:22px;font-weight:500}
-.supplier-profile h2{font-size:21px;overflow-wrap:anywhere}
 .supplier-empty{min-height:140px;padding:24px;gap:10px}
 .supplier-empty p{font-size:12px;max-width:340px}
-@media(max-width:1100px){
-  .supplier-bill summary{grid-template-columns:16px minmax(0,1fr) minmax(190px,auto)}
-  .supplier-bill-statuses{grid-column:2;grid-row:2;flex-direction:row;flex-wrap:wrap}
-  .supplier-status{width:auto}
+@media(max-width:900px){
+  .supplier-bill summary{grid-template-columns:16px minmax(0,1fr) auto;gap:6px 12px}
+  .supplier-bill-statuses{grid-column:2;grid-row:2;justify-content:flex-start}
   .supplier-bill-pricing{grid-column:3;grid-row:1 / span 2;align-self:center}
-  .supplier-bill summary{gap:6px 12px}
 }
 @media(max-width:680px){
-  .suppliers-view{gap:14px}
+  .suppliers-view{gap:12px}
   .supplier-toolbar{justify-content:flex-start}
   .supplier-toolbar .supplier-back{flex-basis:100%;margin:0;justify-content:flex-start}
-  .main-content .supplier-overview{grid-template-columns:1fr;gap:10px}
-  .supplier-overview .metric-card{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px 12px;padding:15px}
-  .main-content .supplier-overview .metric-card>strong{margin:0;font-size:22px}
+  .main-content .supplier-overview{grid-template-columns:1fr;gap:8px}
+  .supplier-overview .metric-card{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px 12px;padding:12px 14px}
+  .main-content .supplier-overview .metric-card>strong{margin:0;font-size:20px}
   .supplier-overview-note{grid-column:1/-1;margin:0}
-  .main-content .supplier-directory>.panel-heading{padding:14px}
+  .supplier-navigation>button{padding:9px 12px 10px;font-size:11px}
+  .supplier-navigation>button:first-child{padding-right:14px}
+  .main-content .supplier-directory>.panel-heading{padding:12px 14px}
   .supplier-directory .supplier-filter{width:100%;margin:0;flex-wrap:wrap;gap:10px}
   .supplier-directory .supplier-list-search{width:100%;flex-basis:100%}
-  .supplier-directory .form-input{min-height:40px}
+  .supplier-directory .form-input{min-height:38px}
   .main-content .supplier-ledger>.panel-heading{padding:12px 14px}
   .supplier-ledger .panel-heading-meta{display:none}
-  .supplier-bill summary{grid-template-columns:12px minmax(0,1fr) auto;padding:14px;gap:8px}
+  .supplier-bill summary{grid-template-columns:12px minmax(0,1fr) auto;padding:12px 14px;gap:6px 8px}
   .supplier-bill summary>span:last-child{max-width:none;flex-shrink:initial}
   .supplier-bill-pricing{grid-column:3;grid-row:1;align-self:start;gap:6px}
   .supplier-bill-amount strong{font-size:12px}
   .supplier-bill-amount small{max-width:110px;font-size:10px}
-  .supplier-bill-pdf-btn{height:26px;padding:0 6px;font-size:10px;gap:3px}
-  .supplier-bill-statuses{grid-column:2/-1}
+  .supplier-bill-statuses{grid-column:2/-1;justify-content:flex-start}
   .supplier-bill-content{padding:0 14px 14px}
   .supplier-bill-content .data-table{min-width:460px}
   .supplier-bill-payment-summary{grid-template-columns:minmax(0,1fr)}
@@ -260,7 +292,7 @@
   .supplier-payment-history li>span{grid-column:1/-1;text-align:left}
   .supplier-form .supplier-actions button,.supplier-bill-content .supplier-actions button{flex-grow:1}
 }
-@media(prefers-reduced-motion:reduce){.supplier-bill-chevron svg{transition:none}}
+@media(prefers-reduced-motion:reduce){.supplier-bill-chevron svg,.supplier-navigation>button{transition:none}}
 
 .supplier-report-download{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:8px 12px;font-size:12px;margin-left:auto}
 .supplier-report-scope,.supplier-report-notice{margin:12px 18px;font-size:12px;line-height:1.6;color:var(--text-secondary)}
