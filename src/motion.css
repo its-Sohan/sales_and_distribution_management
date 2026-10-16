@@ -47,14 +47,14 @@
     .product-row:hover .row-enter,
     .payment-button:hover:not(:disabled) .payment-button-right>svg,
     .add-button:hover:not(:disabled)>svg { translate: 2px 0; }
-    .metric-card:hover {
+    :is(.metric-card, .report-overview-grid .report-panel, .report-overview-grid > .panel):hover {
       translate: 0 -2px;
       box-shadow: var(--shadow-card-hover);
       z-index: 1;
     }
   }
 
-  .metric-card {
+  :is(.metric-card, .report-overview-grid .report-panel, .report-overview-grid > .panel) {
     position: relative;
     transition: translate var(--motion-standard) var(--motion-ease), box-shadow var(--motion-standard) var(--motion-ease);
   }
@@ -125,5 +125,5 @@
 .app-shell :where(button, a, summary, input, select, textarea) { transition-timing-function: var(--motion-ease); }
 @media print {
   .modal, .metric-card>strong, .success-mark { animation: none !important; }
-  .metric-card { translate: none !important; box-shadow: none !important; }
+  :is(.metric-card, .report-overview-grid .report-panel, .report-overview-grid > .panel) { translate: none !important; box-shadow: none !important; }
 }

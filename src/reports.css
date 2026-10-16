@@ -40,7 +40,7 @@
 .report-chart-title>strong{font:12px var(--mono);color:var(--ink);font-weight:500}
 .report-chart{display:flex;align-items:stretch;gap:5px;height:143px;border-top:1px dashed var(--line);padding-top:12px;background:repeating-linear-gradient(to top,transparent,transparent 40px,var(--line) 40px,var(--line) 41px)}
 .report-chart-column{min-width:0;flex:1;display:flex;flex-direction:column;align-items:stretch;gap:8px;position:relative;touch-action:manipulation}
-.report-bar-space{display:flex;flex:1;align-items:flex-end;border-bottom:1px solid var(--line)}
+.report-bar-space{display:flex;flex:1;min-height:0;align-items:flex-end;border-bottom:1px solid var(--line)}
 .report-bar{display:block;width:100%;position:relative;background:var(--line);min-height:2px;border-radius:2px 2px 0 0;transition:transform var(--motion-standard) var(--motion-ease),box-shadow var(--motion-standard) var(--motion-ease),background-color var(--motion-fast) var(--motion-ease)}
 .report-bar-value{position:absolute;left:50%;bottom:calc(100% + 5px);z-index:2;padding:3px 5px;border:1px solid var(--line);background:var(--white);color:var(--ink);font:11.35px/1 var(--mono);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transform:translate(-50%,3px);box-shadow:var(--shadow-control);transition:opacity .15s ease,transform .15s ease,visibility .15s}
 .has-sales .report-bar{background:color-mix(in srgb,var(--accent) 70%,var(--white))}
@@ -49,7 +49,7 @@
 .report-chart-column:hover,.report-chart-column.selected,.report-chart-column:focus-visible{z-index:2}
 .report-chart-column:hover .report-bar-value,.report-chart-column.selected .report-bar-value,.report-chart-column:focus-visible .report-bar-value{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .report-chart-column.selected::before{content:'';position:absolute;inset:-5px -2px 0;background:color-mix(in srgb,var(--accent) 5%,transparent);pointer-events:none}
-.report-chart-column>small{font:9px var(--mono);color:var(--muted);position:relative;white-space:nowrap}
+.report-chart-column>small{display:flex;align-items:center;justify-content:center;flex:0 0 18px;height:18px;line-height:1;font:9px var(--mono);color:var(--muted);position:relative;white-space:nowrap;overflow:hidden}
 .report-chart-column.selected>small{color:var(--accent-ink)}
 .report-chart-detail{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:10px;color:var(--text-secondary);line-height:1.6;flex-wrap:wrap}
 .report-chart-detail strong{color:var(--ink);font-weight:500}
