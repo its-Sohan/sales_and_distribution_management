@@ -2478,7 +2478,6 @@ select.form-input{appearance:none;background-image:var(--select-chevron);backgro
 .main-content .product-price{display:flex;align-items:baseline;justify-content:flex-end;gap:4px;white-space:nowrap}
 .main-content .product-price>span{margin-top:0}
 
-.backend-loading{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:30px;text-align:center}.backend-loading h1{font-size:32px}.backend-loading p{max-width:540px;color:var(--muted)}
 .backend-recovery{border-top:1px solid var(--line);margin-top:18px;padding-top:14px;color:#b3261e}.backend-recovery p{margin-bottom:12px}
 
 /* Give the smallest desktop labels room to read on large monitors. Keep the

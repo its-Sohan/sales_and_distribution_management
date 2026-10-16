@@ -1,5 +1,6 @@
 import { lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { DeferredContent } from './DeferredContent'
+import { LoadingScreen } from './LoadingScreen'
 import { checkSession, signIn, signOut } from './auth'
 import { Login } from './Login'
 import type { Lang } from './model'
@@ -55,7 +56,7 @@ export default function AuthGate() {
     channel.current?.postMessage('signed-out')
   }
 
-  return phase === 'signed-in'
-    ? <DeferredContent lang={lang}><App onSignOut={logout} lang={lang} setLang={setLang} theme={theme} setTheme={setTheme}/></DeferredContent>
-    : <Login lang={lang} onLanguage={setLang} theme={theme} onTheme={() => setTheme(current => current === 'dark' ? 'light' : 'dark')} checking={phase === 'checking'} unavailable={phase === 'unavailable'} expired={expired} onRetry={() => void refreshSession()} onLogin={login}/>
+  if (phase === 'checking') return <LoadingScreen lang={lang} phase="boot"/>
+  if (phase === 'signed-in') return <DeferredContent lang={lang}><App onSignOut={logout} lang={lang} setLang={setLang} theme={theme} setTheme={setTheme}/></DeferredContent>
+  return <Login lang={lang} onLanguage={setLang} theme={theme} onTheme={() => setTheme(current => current === 'dark' ? 'light' : 'dark')} checking={false} unavailable={phase === 'unavailable'} expired={expired} onRetry={() => void refreshSession()} onLogin={login}/>
 }

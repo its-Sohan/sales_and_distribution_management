@@ -99,8 +99,9 @@
 .report-movement{display:flex;flex-direction:column}
 .report-top-description{padding:12px 16px 4px}
 .report-top-items>button{display:flex;align-items:center;gap:9px;width:100%;padding:10px 16px;text-align:left;border-bottom:1px solid var(--line)}
+.report-top-items>button:nth-child(even){background:var(--table-row-alt)}
 .report-top-items>button:last-child{border-bottom:0}
-.report-top-items>button:hover{background:var(--paper)}
+.report-top-items>button:hover{background:var(--surface-hover)}
 .report-rank{font:9px var(--mono);color:var(--muted)}
 .main-content .report-top-items .product-art{width:27px;height:27px;flex-shrink:0}
 .main-content .report-top-items .product-art svg{width:22px;height:22px}

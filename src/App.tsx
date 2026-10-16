@@ -3,6 +3,7 @@ import { Icon, PixelMark, ProductArt } from './Icons'
 import { Receipt as ReceiptMemo } from './Receipt'
 import { ReturnSlip } from './ReturnSlip'
 import { DeferredContent } from './DeferredContent'
+import { LoadingScreen } from './LoadingScreen'
 import { ReportWindowControl } from './ReportWindowControl'
 import { Modal, type ModalHandle } from './Modal'
 import { suppliersTranslator } from './suppliersCopy'
@@ -1104,7 +1105,7 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
     finally { setBusy(false) }
   }
 
-  if (!ready) return <div className="backend-loading" role="status"><PixelMark/><h1>Hisab</h1><p>{backendError || t('loadingData')}</p>{backendError && <><button className="primary-button" onClick={() => void refreshWorkspace()} disabled={busy}>{t('refreshData')}</button><button className="text-button" onClick={() => void logout()} disabled={busy}>{lang === 'bn' ? 'সাইন আউট' : 'Sign out'}<Icon name="logout" size={16}/></button></>}</div>
+  if (!ready) return <LoadingScreen lang={lang} message={backendError || undefined} busy={busy} onRetry={() => void refreshWorkspace()} onSignOut={() => void logout()}/>
 
   return <div ref={motionRoot} className={`app-shell lang-${lang}`}>
     <a className="skip-link" href="#main-content">{t('skipToContent')}</a>
