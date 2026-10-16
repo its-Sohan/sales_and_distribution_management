@@ -1,15 +1,11 @@
 /* Short feedback, stable text, and no permanent layer promotion. */
-.bill-row { position: relative; }
-.bill-row-feedback {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: var(--accent-ink);
-  opacity: 0;
-  pointer-events: none;
-}
-
 @media (prefers-reduced-motion: no-preference) {
+  /* One-shot cues toggled by useLedgerMotion: row surface flash plus value bump. */
+  .is-flashing { animation: row-flash var(--dur-fast) var(--ease-out-snappy); }
+  .is-bumping { animation: value-bump var(--dur-fast) var(--ease-out-snappy); }
+  /* The save dot breathes while a write is in flight, then settles. */
+  .connection.saving>i { animation: status-pulse 1.4s var(--ease-in-out-crisp) infinite; }
+
   /* Keep the value steady while the surrounding field responds to focus. */
   .quantity-lane .quantity-field {
     position: relative;
@@ -103,9 +99,23 @@
   to { translate: 500% 0; }
 }
 
+/* Shared motion primitives: short, hardware-accelerated feedback.
+   The row tint reuses the accent selection color so it works in both themes. */
+@keyframes row-flash {
+  0% { background-color: color-mix(in srgb, var(--accent-bright) 14%, transparent); }
+  100% { background-color: transparent; }
+}
+@keyframes value-bump {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.035); }
+}
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .45; transform: scale(.88); }
+}
+
 .app-shell :where(button, a, summary, input, select, textarea) { transition-timing-function: var(--motion-ease); }
 @media print {
-  .bill-row-feedback { display: none; }
   .modal, .metric-card>strong, .success-mark { animation: none !important; }
   .metric-card { translate: none !important; box-shadow: none !important; }
 }

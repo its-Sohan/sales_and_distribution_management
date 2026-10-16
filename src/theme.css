@@ -6,6 +6,7 @@
   --surface-inset: #f3f4ee;
   --surface-input: #fcfcfa;
   --surface-hover: #eef1e8;
+  --table-row-alt: #f3f4ee;
   --text-secondary: #62665c;
   --muted: var(--text-secondary);
   --tiny-text-contrast: var(--text-secondary);
@@ -34,6 +35,7 @@
   --surface-inset: #202023;
   --surface-input: #1e1e20;
   --surface-hover: #2d2d30;
+  --table-row-alt: #2d2d30;
   --text-secondary: #b9b9bf;
   --accent-ink: #78d99e;
   --accent-hover: #006a33;
@@ -187,6 +189,15 @@
 
 /* Suppress inherited control transitions for the two frames that commit a palette switch. */
 @media screen {
+  :root .app-shell .data-table tbody tr:nth-child(even) td { background-color: var(--table-row-alt); }
+  :root .app-shell .data-table tbody tr:hover td { background-color: var(--surface-hover); }
+  :root .app-shell .catalog-panel .product-list > .product-row:nth-child(even):not(.selected) {
+    background-color: var(--table-row-alt);
+  }
+  :root .app-shell .catalog-panel .product-list > .product-row:hover:not(.selected) {
+    background-color: var(--surface-hover);
+  }
+
   :root.theme-switching, :root.theme-switching body,
   .theme-switching .app-shell, .theme-switching .app-shell *,
   .theme-switching .app-shell *::before, .theme-switching .app-shell *::after {

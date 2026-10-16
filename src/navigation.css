@@ -8,8 +8,8 @@
 .sale-steps .current{color:var(--ink);font-weight:600}
 .sale-steps .done{color:var(--accent)}
 .sale-step-track{position:absolute;top:5px;left:16.667%;width:66.666%;height:1px;background:var(--line)}
-.sale-step-progress{position:absolute;inset:0;background:var(--accent-ink);transform-origin:left center;transition:transform 220ms var(--motion-ease)}
-.sale-step-cursor{position:absolute;inset:0;transition:transform 220ms var(--motion-ease)}
+.sale-step-progress{position:absolute;inset:0;background:var(--accent-ink);transform-origin:left center;transition:transform var(--dur-normal) var(--motion-ease)}
+.sale-step-cursor{position:absolute;inset:0;transition:transform var(--dur-normal) var(--motion-ease)}
 .sale-step-point{position:absolute;left:0;top:50%;width:8px;height:8px;border:1px solid var(--accent-ink);border-radius:50%;background:var(--white);box-shadow:0 0 0 3px var(--accent-soft);transform:translate(-50%,-50%)}
 .find-bill-trigger,.new-item-trigger{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:8px 12px;font-size:12px;white-space:nowrap}
 .main-content .inventory-header-actions>button{min-height:38px;padding:0 12px;gap:7px;font-size:11px;white-space:nowrap}

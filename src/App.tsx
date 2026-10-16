@@ -1237,7 +1237,6 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
                 if (!p) return null
                 return (
                   <div key={line.productId} data-product-id={line.productId} className={`bill-row ${index === billSelection ? 'bill-selected' : ''}`}>
-                    <span className="bill-row-feedback" aria-hidden="true"/>
                     <div className="bill-product"><span className="bill-line-index">{String(index + 1).padStart(2, '0')}</span><div><strong>{p.en}</strong><small>{rateText({ ...p, price: line.unitPrice ?? p.price }, true)}<span>·</span>{lang === 'en' ? p.detail : p.detailBn}</small></div></div>
                     <button className="bill-qty" aria-label={`${t('editQty')}: ${p.en}`} onClick={() => editLine(index)}><FittedQuantity value={line.legacyAmount ? '—' : quantityWithUnit(line.quantity, p.unit)}/></button><strong className="bill-amount">{line.legacyAmount ? '—' : money(lineTotal(line.unitPrice ?? p.price, line.quantity), true)}</strong><button className="remove-line icon-button" aria-label={`${t('remove')}: ${p.en}`} onClick={() => removeLine(index)}><Icon name="close" size={14}/></button>
                   </div>
