@@ -72,7 +72,7 @@
 .supplier-name:hover{color:var(--accent-ink)}
 .supplier-identity small{display:block;color:var(--text-secondary);font-size:var(--detail-size,11px)}
 .supplier-table td{color:var(--text-secondary);min-height:var(--row-height,60px)}
-.supplier-table td code{font:11px var(--mono);color:var(--text-secondary)}
+.supplier-table td code{font:11px var(--mono);color:color-mix(in srgb,var(--text-secondary) 84%,var(--ink))}
 .supplier-table td.numeric-cell{font:500 13px var(--mono);font-variant-numeric:tabular-nums;color:var(--ink)}
 .supplier-table td:last-child{width:32px;padding-left:0;color:var(--text-secondary)}
 .supplier-table th:nth-last-child(2),.supplier-table td:nth-last-child(2){text-align:right}
@@ -134,7 +134,6 @@
 .invoice-payment-entry{min-width:0}
 .invoice-payment h4{font-size:14px;font-weight:600;line-height:1.5;color:var(--ink)}
 .invoice-form .invoice-payment .supplier-payment-fields{margin:12px 0 8px}
-.invoice-payment-hint{max-width:56ch;margin:0;font-size:12px;line-height:1.6;color:var(--text-secondary);text-align:left}
 .invoice-payment-summary{display:flex;flex-direction:column;justify-content:center;gap:14px;min-width:0;margin:0;padding:16px;background:var(--surface-inset)}
 .invoice-payment-summary>div{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 .invoice-payment-summary dt{font-size:12px;line-height:1.5;color:var(--text-secondary)}
@@ -143,8 +142,6 @@
 .invoice-payment-due dd{color:var(--accent-ink)}
 .invoice-payment-due.has-due dd{color:var(--warning)}
 .invoice-form .invoice-notes{margin-top:20px;gap:8px}
-.invoice-notes>label{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px}
-.invoice-notes>label>span{font-size:11px;font-weight:400;color:var(--text-secondary)}
 .invoice-form .invoice-notes textarea{height:auto;min-height:76px;padding:10px;font-family:inherit;resize:vertical}
 .invoice-form>.supplier-actions{margin-top:20px;gap:10px}
 @container(min-width:680px){
@@ -185,7 +182,7 @@
 .receiving-entry-footer>button{flex-shrink:0;min-height:38px;padding:8px 0;font-size:12px}
 @media(max-width:420px){.receiving-entry-fields{grid-template-columns:minmax(0,1fr);gap:16px}.receiving-entry-footer{align-items:flex-start}}
 .purchases-filter{gap:10px;margin-left:auto;flex-wrap:wrap;align-items:center}
-.purchases-filter .supplier-list-search{width:220px;min-width:160px}
+.purchases-filter .supplier-list-search{width:250px;min-width:160px}
 .purchases-tabs{padding:0;gap:4px;flex-wrap:wrap}
 
 @media(min-width:681px){

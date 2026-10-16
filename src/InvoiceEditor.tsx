@@ -140,17 +140,16 @@ export function InvoiceEditor({ suppliers, lang, supplierId: initial, purchases,
     </fieldset>)}
     <button type="button" className="secondary-button" aria-label={t('addInvoiceLine')} title={t('addInvoiceLine')} onClick={() => setLines([...lines, {id:crypto.randomUUID(), description:'', unit:'pc', quantity:'', unitCost:'', total:''}])}><Icon name="plus" size={18}/></button>
     <section className="invoice-payment" aria-labelledby="purchase-payment-heading">
-      <div className="invoice-payment-entry" role="group" aria-describedby="purchase-payment-hint">
+      <div className="invoice-payment-entry" role="group">
         <h4 id="purchase-payment-heading">{t('paymentDetails')}</h4>
         <PurchasePaymentFields onPurchaseDate lang={lang} paid={paid} method={method} onPaid={setPaid} onMethod={setMethod}/>
-        <p id="purchase-payment-hint" className="invoice-payment-hint">{t('datePaymentHint')}</p>
       </div>
       <dl className="invoice-payment-summary">
         <div><dt>{t('purchaseValue')}</dt><dd>৳ {money(total)}</dd></div>
         <div className={`invoice-payment-due${amountPaid !== null && total - amountPaid > 0 ? ' has-due' : ''}`}><dt>{t('settlement')}</dt><dd>{amountPaid === null ? '—' : `৳ ${money(total - amountPaid)}`}</dd></div>
       </dl>
     </section>
-    <div className="form-group invoice-notes"><label htmlFor="purchase-note">{t('note')} <span>{t('optional')}</span></label><textarea id="purchase-note" className="form-input" rows={2} value={note} maxLength={500} placeholder={t('notePlaceholder')} onChange={e => setNote(e.target.value)}/></div>
+    <div className="form-group invoice-notes"><label htmlFor="purchase-note">{t('note')}</label><textarea id="purchase-note" className="form-input" rows={2} value={note} maxLength={500} placeholder={t('notePlaceholder')} onChange={e => setNote(e.target.value)}/></div>
     {error && <p className="field-error" role="alert">{error}</p>}
     <div className="supplier-actions"><button type="button" className="primary-button" disabled={saving} onClick={() => void submitInvoice(true)}>{t('saveAndReceive')}</button><button type="button" className="secondary-button" disabled={saving} onClick={() => void submitInvoice(false)}>{t('saveInvoice')}</button><button type="button" className="secondary-button" disabled={saving} onClick={onCancel}>{t('cancel')}</button></div>
   </form>

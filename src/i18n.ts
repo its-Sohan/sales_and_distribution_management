@@ -70,7 +70,8 @@ const en = {
   shortcutTitle: 'Keyboard shortcuts', shortcutHint: 'Press these keys to work faster.',
   focusSearch: 'Go to search box', billFocus: 'Go to current bill', openPayment: 'Open pay box',
   editBill: 'Change item quantity', removeBill: 'Remove item from bill', closeDialog: 'Close / go back',
-  showHelp: 'Show shortcuts', shortcutsNote: 'F2 → choose item → Enter → price → Enter → quantity → Enter. Escape cancels item entry.',
+  showHelp: 'Show shortcuts', // Removed detailed shortcut instructions for cleaner UI.
+
   language: 'Language', appearance: 'Screen look', light: 'Light', dark: 'Dark', toggleTheme: 'Switch light/dark', settingsHint: 'Settings and backup.',
   storage: 'Saved data', storageHint: 'Download a copy of the records loaded from the backend.',
   terminalNumber: 'Terminal number', terminalHint: 'Terminal ID (1–999) used for receipt numbering',
