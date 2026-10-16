@@ -1156,7 +1156,7 @@ export default function App({ onSignOut, lang, setLang, theme, setTheme }: {
           </div>
           <button className="secondary-button find-bill-trigger" onClick={openBillFinder}><Icon name="search" size={16}/>{t('findBill')}</button>
         </div>}
-        <DeferredContent key={view} lang={lang}>{view === 'sales' ? <div className="checkout-grid">
+        <DeferredContent key={view} lang={lang} fallback={<LoadingScreen lang={lang} variant="inline"/>}>{view === 'sales' ? <div className="checkout-grid">
           <section className="panel catalog-panel" aria-labelledby="products-heading">
             <div className="panel-heading"><div className="section-title"><h2 id="products-heading">{t('products')}</h2><span className="count-badge">{catalog.length}</span></div><span className="panel-heading-meta">{t('available')}</span></div>
             <div className={`search-box ${quantityProduct ? 'subdued' : ''}`}><Icon name="search" size={20}/><input ref={searchRef} aria-label={t('searchLabel')} placeholder={t('search')} value={query} autoComplete="off" spellCheck={false} onChange={e => { setQuery(e.target.value); setQuantityProduct(null); setInputError('') }} onKeyDown={e => {

@@ -12,6 +12,11 @@
 .loading-message{max-width:540px;font-size:12px;line-height:1.7;color:var(--danger)}
 .loading-actions{display:flex;align-items:center;gap:14px;margin-top:2px}
 .loading-screen--error .loading-rule-sweep{animation:none;opacity:.3}
+.loading-screen--inline{flex:1;min-height:0;gap:14px;padding:56px 24px}
+.loading-screen--inline .loading-brand .pixel-mark{width:28px;height:28px}
+.loading-screen--inline .loading-wordmark{font-size:26px}
+.loading-screen--inline .loading-rule{width:min(180px,54vw)}
+.loading-inline-label{font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text-secondary)}
 
 @media (prefers-reduced-motion: no-preference){
   .loading-brand .pixel-mark{animation:loading-mark var(--dur-normal) var(--ease-out-snappy) both}
