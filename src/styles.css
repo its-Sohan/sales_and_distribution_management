@@ -1953,6 +1953,7 @@
 [data-theme="dark"] .table-search input,
 .dark .table-search input{color:var(--ink)}
 .customer-table-empty{min-height:160px;padding:30px 20px}
+.accounts-view .customer-account-row td:nth-child(2) code{font-size:12.1px}
 .customer-address-cell{display:block;max-width:260px;white-space:normal;overflow-wrap:anywhere;line-height:1.4;color:var(--muted)}
 .customer-account-row,.stock-account-row,.expense-account-row{position:relative;z-index:0;transition:background-color 180ms ease}
 .customer-account-row:hover,.stock-account-row:hover,.expense-account-row:hover{z-index:1;background:color-mix(in srgb,var(--accent) 4%,var(--white));box-shadow:none}
@@ -3000,7 +3001,8 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 
 /* A shared elevation scale for controls, cards, and overlays. */
 :root:not(.dark):not([data-theme="dark"]){
-  --sidebar-border:#dedfd7;
+  --sidebar-border:#d2d3cb;
+  --sidebar-shadow:2px 0 8px rgba(34,35,31,.07);
   --control-border:#bcc4b1;
   --control-border-hover:#8f9b80;
   --card-border:#c9d0bf;
@@ -3014,7 +3016,7 @@ input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
   --button-shadow-hover:var(--button-shadow);
   --button-shadow-pressed:inset 0 1px 1px rgba(24,28,20,.08);
 }
-.sidebar{border-right-color:var(--sidebar-border,var(--line))}
+.sidebar{border-right-color:var(--sidebar-border,var(--line));box-shadow:var(--sidebar-shadow,none)}
 [data-theme="dark"],.dark{
   --control-border:#3e3e42;
   --control-border-hover:#54545a;
