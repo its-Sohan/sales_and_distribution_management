@@ -22,7 +22,7 @@ const en = {
   topItems: 'Most sold items', topHint: 'Ranked by Total sales in this period', allItems: 'All items', viewBills: 'View bills',
   searchBills: 'Search bill, customer, or item…', searchItems: 'Search item name or code…', searchLabel: 'Search reports',
   paymentMethod: 'Payment method', allMethods: 'All methods', paymentStatus: 'Payment status', allStatuses: 'All statuses',
-  paid: 'Paid in full', settled: 'Paid (Settled)', due: 'Due', sort: 'Sort by', newest: 'Newest first', oldest: 'Oldest first', largest: 'Largest bill',
+  paid: 'Paid', settled: 'Paid (Settled)', due: 'Due', sort: 'Sort by', newest: 'Newest first', oldest: 'Oldest first', largest: 'Largest bill',
   itemScope: 'Item activity', soldItems: 'Items with activity', unsoldItems: 'No activity', category: 'Category', allCategories: 'All categories',
   bySales: 'Highest sales', byProfit: 'Highest profit', byBills: 'Most bills', netRevenue: 'Total sales', profit: 'Gross profit',
   share: 'Sales share', quantity: 'Quantity sold', items: 'items', billItems: 'items', date: 'Date / time', amount: 'Bill total',

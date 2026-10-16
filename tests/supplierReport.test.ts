@@ -95,7 +95,7 @@ test('supplier report reflects persisted invoice, receiving, and payment after a
   const reloaded = await loadWorkspace(2)
   const report = buildSupplierReport(reloaded.state.suppliers![0], reloaded.state, allProducts(reloaded.state.customProducts), 'en', now)
   assert.equal(report.rows.length, 4)
-  assert.match(report.rows[0].cells[1], /Paid in full\nFully received/)
+  assert.match(report.rows[0].cells[1], /Paid\nFully received/)
   assert.match(report.rows.at(-1)!.cells[3], /Balance cleared/)
   assert.match(report.summary, /Outstanding balance: ৳ 0/)
 })
